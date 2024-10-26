@@ -1,5 +1,3 @@
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Overly-Optimistic-Procrastinators-II/comp3607project)
-
 # Team 15's Automated Judge System
 
 ## Essential Features
