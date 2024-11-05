@@ -1,9 +1,8 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+package comp3607project;
 
 public interface testIterator 
 {
-    
+    public testCase next();
+    public boolean hasNext();
+    public void print();
 }
