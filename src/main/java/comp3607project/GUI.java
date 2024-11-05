@@ -5,10 +5,7 @@ import java.util.Vector;
 
 public class GUI implements GUI_interface
 {
-    @SuppressWarnings("unused")
-    private boolean subjectState;
-    @SuppressWarnings("rawtypes")
-    private Vector listeners = new Vector();
+    private Vector listeners = new Vector<>();
 
     public void alert()
     {
