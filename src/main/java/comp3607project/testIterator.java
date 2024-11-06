@@ -4,5 +4,4 @@ public interface testIterator
 {
     public testCase next();
     public boolean hasNext();
-    public void print();
 }
