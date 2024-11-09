@@ -1,3 +1,7 @@
+/*
+ * Concrete Observer
+ */
+
 package comp3607project;
 
 public class TestReportGenerator implements TestObserver {
