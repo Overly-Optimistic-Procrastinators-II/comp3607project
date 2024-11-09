@@ -1,19 +1,23 @@
+/*
+ * Invoker
+ */
+
 package comp3607project;
 
-public class Invoker 
-{
-    private CommandInterface command; 
+public class Invoker {
+    private Command command; 
 
-    public void setCommand(CommandInterface command)
-    {
+    public Invoker() {}
+
+    public void setCommand(Command command) {
         this.command = command;
     }
 
-    public void pressButton()
-    {
+    public void pressButton() {
         if (command != null) {
             command.execute();
-        } else {
+        }
+        else {
             System.out.println("No command set.");
         }
     }
