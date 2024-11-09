@@ -1,6 +1,10 @@
 package comp3607project;
 
-public class testCase 
-{
+public class TestCase {
+    
+
+    public TestCase() {
+
+    }
     
 }
