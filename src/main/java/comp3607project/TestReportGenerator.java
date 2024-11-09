@@ -1,11 +1,10 @@
-/*
- * Concrete Observer
- */
-
 package comp3607project;
 
-public class TestReportGenerator implements TestObserver {
+import java.util.List;
+
+public class TestReportGenerator {
     
+    private List<TestResult> report;
 
     public TestReportGenerator() {
 
