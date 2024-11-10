@@ -146,11 +146,11 @@ public class JudgeSystem {
         String filename = filePath;
         if (filename.endsWith(".java")) 
         {
-            System.out.println(filename + " is a .java file");
+            //System.out.println(filename + " is a .java file");
             return true;
         } else 
         {
-            System.out.println(filename + " is not a .java file");
+            //System.out.println(filename + " is not a .java file");
             return false;
         }
     }

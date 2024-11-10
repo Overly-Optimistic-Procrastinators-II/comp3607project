@@ -20,10 +20,48 @@ public class FileManager implements FileContainer {
     public FileManager (File dir)
     {
         files = new ArrayList<FileType>();
+        addingJavaFilesFromDirectory(dir);
     }
 
-    public FileIterator createFileParser() {
+    private void addingJavaFilesFromDirectory(File dir)
+    {
+        if (dir.isDirectory())
+        {
+            File [] fileList = dir.listFiles();
+            if (fileList != null)
+            {
+                for (File file : fileList)
+                {
+                    if (file.isFile() && getExtension(file.getName()))
+                    {
+                        files.add(new FileType(file));
+                    }
+                    else if (file.isDirectory())
+                    {
+                        addingJavaFilesFromDirectory(file);
+                    }
+                }
+            }
+        }
+    }
+
+    public FileIterator createFileParser() 
+    {
         return new FileParser(files);
+    }
+
+    public boolean getExtension(String filePath)
+    {
+        String filename = filePath;
+        if (filename.endsWith(".java")) 
+        {
+            //System.out.println(filename + " is a .java file");
+            return true;
+        } else 
+        {
+            //System.out.println(filename + " is not a .java file");
+            return false;
+        }
     }
 
     
