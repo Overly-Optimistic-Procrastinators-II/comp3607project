@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class JavaFile implements File {
+public class JavaFile implements FileType {
      public static void main(String[] args){
         String zipFilePath = "/src/main/resources/bonkywonky.zip";
         String destDir = "/src/main/resources";

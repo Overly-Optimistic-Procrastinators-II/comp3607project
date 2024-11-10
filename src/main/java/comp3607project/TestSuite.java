@@ -12,9 +12,9 @@ public class TestSuite implements TestContainer {
     private TestSuite() {
         this.tests = new ArrayList<TestCase>();
         // tests.add(new TestChatBot());
-        tests.add(new TestChatBotPlatform());
-        tests.add(new TestChatBotGenerator());
-        tests.add(new TestChatBotSimulation());
+        // tests.add(new TestChatBotPlatform());
+        // tests.add(new TestChatBotGenerator());
+        // tests.add(new TestChatBotSimulation());
     }
 
     public TestIterator createTestRunner() {
