@@ -9,7 +9,7 @@ import java.util.List;
 public class FileManager implements FileContainer {
     private List<File> files;
 
-    private FileManager() {
+    public FileManager() {
 
     }
 

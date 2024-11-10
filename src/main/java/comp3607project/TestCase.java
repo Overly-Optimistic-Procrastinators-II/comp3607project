@@ -1,6 +1,6 @@
 package comp3607project;
 
-public abstract class TestCase {
+public class TestCase {
     private String id;
     private String name;
     private TestResult expectedResult;
@@ -10,6 +10,6 @@ public abstract class TestCase {
 
     }
     
-    public abstract void initialize();
-    public abstract void cleanup();
+    // public abstract void initialize();
+    // public abstract void cleanup();
 }
