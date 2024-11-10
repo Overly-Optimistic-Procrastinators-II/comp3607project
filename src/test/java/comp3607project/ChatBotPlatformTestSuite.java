@@ -5,11 +5,11 @@ import org.junit.Test;
 import java.util.ArrayList;
 // import org.junit.BeforeClass;
 
-public class ChatBotPlatformTest extends TestCase {
+public class ChatBotPlatformTestSuite extends TestCase {
 
     private final ChatBotPlatform testPlatform = new ChatBotPlatform();
     
-    public ChatBotPlatformTest() {}
+    public ChatBotPlatformTestSuite() {}
 
     @Test
     public void testCreateChatBotPlatform() {

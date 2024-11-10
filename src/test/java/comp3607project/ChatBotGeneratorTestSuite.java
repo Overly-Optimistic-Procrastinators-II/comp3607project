@@ -3,9 +3,9 @@ package comp3607project;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class ChatBotGeneratorTest extends TestCase {
+public class ChatBotGeneratorTestSuite extends TestCase {
 
-    public ChatBotGeneratorTest() {}
+    public ChatBotGeneratorTestSuite() {}
 
     @Test
     public void testCreateChatBotGenerator() {

@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 // import org.junit.BeforeClass;
 
-public class ChatBotSimulationTest extends TestCase {
+public class ChatBotSimulationTestSuite extends TestCase {
     
-    public ChatBotSimulationTest() {}
+    public ChatBotSimulationTestSuite() {}
 
     @Test
     public void testCreateChatBotSimulation() {
