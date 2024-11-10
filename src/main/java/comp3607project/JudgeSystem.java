@@ -5,6 +5,8 @@
 package comp3607project;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,6 +14,13 @@ import java.nio.file.StandardCopyOption;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.Font;
 
 
 public class JudgeSystem {
@@ -29,12 +38,49 @@ public class JudgeSystem {
         //Code to do testing here
     }
 
-    
+    public void generateResults() throws DocumentException, FileNotFoundException
+    {   
+        
+        File extractedFilesDir = new File("extracted_files");
+        File[] directories = extractedFilesDir.listFiles(File::isDirectory);
+        File targetDir = new File("");
+        if (directories != null && directories.length > 0) 
+        {
+           targetDir = directories[0];
+        }
 
-    public void generateResults ()
-    {
-        System.out.println ("Generating the results PDF...");
+        
         //Code to generate pdf here
+        Document doc = new Document();
+
+        try{
+
+            PdfWriter.getInstance(doc, new FileOutputStream(new File(targetDir, "results.pdf")));
+ 
+            doc.open();
+            Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+
+            Chunk chunk = new Chunk("Hello World", font);
+
+            doc.add(chunk);
+        }
+        catch(FileNotFoundException e)
+        {
+            System.out.println("File could not be created " + e.getMessage());
+        }
+        catch (DocumentException e)
+        {
+            System.out.println("Error ocurred with PDF document " + e.getMessage());
+        }
+        catch(Exception e) 
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            doc.close();
+        }
+        
     }
 
     public void unzipFiles(String filePath)
