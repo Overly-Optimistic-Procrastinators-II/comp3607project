@@ -1,20 +1,17 @@
 package comp3607project;
 
-import org.junit.*;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-{
+public class AppTest {
     /**
      * Rigorous Test :-)
      */
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        
+    public void shouldAnswerWithTrue() {        
         assertTrue( true );
     }
 }

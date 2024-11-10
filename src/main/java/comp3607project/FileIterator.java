@@ -5,7 +5,6 @@
 package comp3607project;
 
 public interface FileIterator {
-    public File next();
+    public FileType next();
     public boolean hasNext();
-    public void unzip();
 }
