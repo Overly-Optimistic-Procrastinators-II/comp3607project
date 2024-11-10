@@ -200,7 +200,7 @@ public class JudgePortal extends javax.swing.JFrame {
 
     private void outputButtonActionPerformed(java.awt.event.ActionEvent evt) 
     {                                             
-        // TODO add your handling code here:
+        // TODO add your handling code here
         Command producePDFCommand = new CommandProducePDF (judgeSystem);
 
         mainSubmissionLabel.setText("Generating the results PDF...");
