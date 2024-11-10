@@ -28,6 +28,7 @@ public class JudgePortal extends javax.swing.JFrame {
 
         outputButton.setVisible(false);
         evaluateButton.setVisible(false);
+        
     }
 
     /**
@@ -172,6 +173,8 @@ public class JudgePortal extends javax.swing.JFrame {
         {
             File selectedFile = fileChooser.getSelectedFile();
             zipFileLabel.setText(selectedFile.getAbsolutePath());
+
+            evaluateButton.setVisible(true);
         }
     }                                            
 
@@ -185,6 +188,10 @@ public class JudgePortal extends javax.swing.JFrame {
         String filePath = zipFileLabel.getText();
 
         mainSubmissionLabel.setText("Evaluating the submission of the file");
+
+        Command unzipFilesCommand = new CommandUnzipFiles (judgeSystem, filePath);
+        invoker.setCommand(unzipFilesCommand);
+        invoker.pressButton();
 
         Command runTestsCommand = new CommandRunTests (judgeSystem, filePath);
         invoker.setCommand(runTestsCommand);

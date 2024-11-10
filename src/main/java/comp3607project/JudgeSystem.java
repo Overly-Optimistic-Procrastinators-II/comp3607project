@@ -23,5 +23,11 @@ public class JudgeSystem {
         System.out.println ("Generating the results PDF...");
         //Code to generate pdf here
     }
+
+    public void unzipFiles(String filePath)
+    {
+        System.out.println("Unzipping the files from this file: " + filePath);
+        //Code to unzip files here
+    }
     
 }
