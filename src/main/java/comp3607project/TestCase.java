@@ -10,6 +10,6 @@ public class TestCase {
 
     }
     
-    public static void initialize() {}
+    public void initialize() {}
     // public void cleanup();
 }
