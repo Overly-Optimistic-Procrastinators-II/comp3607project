@@ -15,14 +15,10 @@ public class FileParser implements FileIterator {
     }
 
     public File next() {
-        return new JavaFile();
+        return files.get(pos++);
     }
 
     public boolean hasNext() {
         return pos < files.size();
-    }
-
-    public void unzip() {
-
     }
 }
