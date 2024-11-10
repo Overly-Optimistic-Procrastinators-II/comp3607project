@@ -10,11 +10,24 @@ import java.io.File;
 
 public class JudgePortal extends javax.swing.JFrame {
 
+    private JudgeSystem judgeSystem;
+    private Invoker invoker = new Invoker();
+
     /**
      * Creates new form judgePortal
      */
-    public JudgePortal() {
+    public JudgePortal() 
+    {
         initComponents();
+    }
+
+    public JudgePortal (JudgeSystem system)
+    {
+        initComponents();
+        this.judgeSystem = system;
+
+        outputButton.setVisible(false);
+        evaluateButton.setVisible(false);
     }
 
     /**
@@ -30,7 +43,7 @@ public class JudgePortal extends javax.swing.JFrame {
         submissionPanel = new javax.swing.JPanel();
         mainSubmissionLabel = new javax.swing.JLabel();
         uploadSubmissionLabel = new javax.swing.JLabel();
-        zipFileTextField = new javax.swing.JTextField();
+        zipFileLabel = new javax.swing.JLabel();
         browseButton = new javax.swing.JButton();
         evaluateButton = new javax.swing.JButton();
         outputButton = new javax.swing.JButton();
@@ -39,16 +52,12 @@ public class JudgePortal extends javax.swing.JFrame {
 
         mainLabel.setText("Automated Judge System");
 
-        mainSubmissionLabel.setText("Submission Panel");
+        mainSubmissionLabel.setText("Select a Zip File");
 
-        uploadSubmissionLabel.setText("Upload Student Files:");
+        uploadSubmissionLabel.setText("Selected file: ");
 
-        zipFileTextField.setText("Enter file path...");
-        zipFileTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zipFileTextFieldActionPerformed(evt);
-            }
-        });
+        zipFileLabel.setText("...");
+        
 
         browseButton.setText("Browse Files");
         browseButton.addActionListener(new java.awt.event.ActionListener() {
@@ -71,6 +80,8 @@ public class JudgePortal extends javax.swing.JFrame {
             }
         });
 
+        submissionPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());  
+
         javax.swing.GroupLayout submissionPanelLayout = new javax.swing.GroupLayout(submissionPanel);
         submissionPanel.setLayout(submissionPanelLayout);
         submissionPanelLayout.setHorizontalGroup(
@@ -81,7 +92,7 @@ public class JudgePortal extends javax.swing.JFrame {
                     .addGroup(submissionPanelLayout.createSequentialGroup()
                         .addComponent(uploadSubmissionLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(zipFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(zipFileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(submissionPanelLayout.createSequentialGroup()
                         .addGroup(submissionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(browseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -101,7 +112,7 @@ public class JudgePortal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(submissionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(uploadSubmissionLabel)
-                    .addComponent(zipFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(zipFileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(submissionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(browseButton)
@@ -139,17 +150,14 @@ public class JudgePortal extends javax.swing.JFrame {
     }// </editor-fold>                        
     
     
-    private void zipFileTextFieldActionPerformed(java.awt.event.ActionEvent evt) {                                                 
-        // TODO add your handling code here:
-        String filePath = zipFileTextField.getText();
-        
-        zipFileTextField.setText(filePath);
-    }                                                
+            
 
 
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
         // TODO add your handling code here:
+
         
+        evaluateButton.setVisible(true);
         
         JFileChooser fileChooser = new JFileChooser();
         
@@ -163,18 +171,36 @@ public class JudgePortal extends javax.swing.JFrame {
         if (returnValue == JFileChooser.APPROVE_OPTION)
         {
             File selectedFile = fileChooser.getSelectedFile();
-            zipFileTextField.setText(selectedFile.getAbsolutePath());
+            zipFileLabel.setText(selectedFile.getAbsolutePath());
         }
     }                                            
 
     private void evaluateButtonActionPerformed(java.awt.event.ActionEvent evt) 
     {                                               
+
         // TODO add your handling code here:
+        outputButton.setVisible(true);
+        
+        
+        String filePath = zipFileLabel.getText();
+
+        mainSubmissionLabel.setText("Evaluating the submission of the file");
+
+        Command runTestsCommand = new CommandRunTests (judgeSystem, filePath);
+        invoker.setCommand(runTestsCommand);
+        invoker.pressButton();
     }                                              
 
     private void outputButtonActionPerformed(java.awt.event.ActionEvent evt) 
     {                                             
         // TODO add your handling code here:
+        Command producePDFCommand = new CommandProducePDF (judgeSystem);
+
+        mainSubmissionLabel.setText("Generating the results PDF...");
+
+        invoker.setCommand(producePDFCommand);
+        invoker.pressButton();
+
     }                                            
 
     /**
@@ -206,8 +232,10 @@ public class JudgePortal extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new JudgePortal().setVisible(true);
+            public void run() 
+            {   
+                JudgeSystem judgeSystem = new JudgeSystem();
+                new JudgePortal(judgeSystem).setVisible(true);
             }
         });
     }
@@ -220,7 +248,7 @@ public class JudgePortal extends javax.swing.JFrame {
     private javax.swing.JButton outputButton;
     private javax.swing.JPanel submissionPanel;
     private javax.swing.JLabel uploadSubmissionLabel;
-    private javax.swing.JTextField zipFileTextField;
+    private javax.swing.JLabel zipFileLabel;
     // End of variables declaration                   
 }
 
