@@ -37,7 +37,7 @@ public class ChatBotTest extends TestCase{
     @Test
     public void testGetChatBotNameDefault(){
         //Tests the default name the constructor assigns to the chatbot
-        assertNotNull(customTester.getChatBotName());
+        assertNotNull("Method must return a non-null variable", customTester.getChatBotName());
         assertTrue("Method should return a String type variable", customTester.getChatBotName() instanceof String);
         assertEquals("The default name for the ChatBot should be 'ChatGPT-3.5'", "ChatGPT-3.5", tester.getChatBotName());
     }
@@ -45,7 +45,7 @@ public class ChatBotTest extends TestCase{
     @Test
     public void testGetChatBotNameCustom(){
         //Tests the overloaded constructor that assigns a custom name to the chatbot
-        assertNotNull(customTester.getChatBotName());
+        assertNotNull("Method must return a non-null variable", customTester.getChatBotName());
         assertTrue("Method should return a String type variable", customTester.getChatBotName() instanceof String);
         assertNotEquals(customTester.getChatBotName(), "ChatGPT-3.5");
     }
@@ -53,14 +53,14 @@ public class ChatBotTest extends TestCase{
     @Test
     public void testGetChatBotName(){
         //Tests the return value of the accessor is a string and is not null
-        assertNotNull(tester.getChatBotName());
+        assertNotNull("Method must return a non-null variable", tester.getChatBotName());
         assertTrue("Method should return a String type variable", tester.getChatBotName() instanceof String);
     }
 
     @Test
     public void testInitialGetNumResponsesGenerated(){
         //Tests the return value of the accessor is an integer and is not null
-        assertNotNull(tester.getNumResponsesGenerated());
+        assertNotNull("Method must return a non-null variable", tester.getNumResponsesGenerated());
         assertTrue("Method should return an Integer type variable", tester.getNumResponsesGenerated() >= 0);
         assertEquals("The initial number of responses generated should be 0", tester.getNumResponsesGenerated(), 0);
     }
@@ -69,7 +69,7 @@ public class ChatBotTest extends TestCase{
     public void testGetNumResponsesGenerated(){
         //Tests the return value of the accessor is an integer and is not null
         tester.prompt("Hello World!");
-        assertNotNull(tester.getNumResponsesGenerated());
+        assertNotNull("Method must return a non-null variable", tester.getNumResponsesGenerated());
         assertTrue("Method should return an Integer type variable", tester.getNumResponsesGenerated() >= 0);
         assertEquals(tester.getNumResponsesGenerated(),1);
     }
@@ -78,7 +78,7 @@ public class ChatBotTest extends TestCase{
     public void testGetTotalNumResponsesGenerated(){
         //Tests the return value of the accessor is an integer and is not null
         customTester.prompt("Hello World!");
-        assertNotNull(ChatBot.getTotalNumResponsesGenerated());
+        assertNotNull("Method must return a non-null variable", ChatBot.getTotalNumResponsesGenerated());
         assertTrue("Method should return an Integer type variable", ChatBot.getTotalNumResponsesGenerated() >= 0);
         assertEquals(3, ChatBot.getTotalNumResponsesGenerated());
     }
@@ -86,14 +86,14 @@ public class ChatBotTest extends TestCase{
     @Test
     public void testGetNumMessagesRemaining(){
         //Test the return value of the accessor is an integer, not null and is a correct value
-        assertNotNull(ChatBot.getTotalNumResponsesGenerated());
+        assertNotNull("Method must return a non-null variable", ChatBot.getTotalNumResponsesGenerated());
         assertTrue("Method should return an Integer type variable", ChatBot.getTotalNumResponsesGenerated() >= 0);
         assertEquals(ChatBot.getTotalNumMessagesRemaining(), (10 - ChatBot.getTotalNumResponsesGenerated()));
     }
 
     @Test
     public void testLimitReached(){
-        assertNotNull(ChatBot.limitReached());
+        assertNotNull("Method must return a non-null variable", ChatBot.limitReached());
         assertTrue("Method should return a Boolean type variable", ChatBot.limitReached() == true || ChatBot.limitReached() == false);
         assertFalse(ChatBot.limitReached());
     }
@@ -114,7 +114,7 @@ public class ChatBotTest extends TestCase{
     public void testPrompt(){
         //Test the return value of the method is a string and is not null
         String response = tester.prompt("Hello World!");
-        assertNotNull(response, "Method must return a non-null variable");
+        assertNotNull("Method must return a non-null variable", response);
         assertTrue("Method should return a String type variable", response instanceof String);
     }
 
@@ -122,7 +122,7 @@ public class ChatBotTest extends TestCase{
     public void testToString(){
         //Test the return value of the method is a string and is not null
         String response = tester.toString();
-        assertNotNull(response, "Method must return a non-null variable");
+        assertNotNull("Method must return a non-null variable", response);
         assertTrue("Method should return a String type variable", response instanceof String);
     }
     
