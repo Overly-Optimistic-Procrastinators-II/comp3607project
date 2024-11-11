@@ -20,7 +20,7 @@ public class ChatBotGeneratorTestSuite {
     
 
     @Test
-    @DisplayName("Test GenerateChatBotLLM default return value")
+    @DisplayName("Test GenerateChatBotLLM returns ChatGPT-3.5 as default value")
     @Tag("1")
     public void testGenerateChatBotLLM() {        
         assertEquals("ChatGPT-3.5", ChatBotGenerator.generateChatBotLLM(0));
