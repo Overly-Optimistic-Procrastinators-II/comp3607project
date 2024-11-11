@@ -192,10 +192,6 @@ public class JudgePortal extends javax.swing.JFrame {
         Command unzipFilesCommand = new CommandUnzipFiles (judgeSystem, filePath);
         invoker.setCommand(unzipFilesCommand);
         invoker.pressButton();
-
-        Command runTestsCommand = new CommandRunTests (judgeSystem, filePath);
-        invoker.setCommand(runTestsCommand);
-        invoker.pressButton();
     }                                              
 
     private void outputButtonActionPerformed(java.awt.event.ActionEvent evt) 
