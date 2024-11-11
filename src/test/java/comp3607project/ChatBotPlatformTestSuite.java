@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 // import org.junit.BeforeClass;
 
-public class ChatBotPlatformTestSuite extends TestCase {
+public class ChatBotPlatformTestSuite {
 
     private final ChatBotPlatform testPlatform = new ChatBotPlatform();
     

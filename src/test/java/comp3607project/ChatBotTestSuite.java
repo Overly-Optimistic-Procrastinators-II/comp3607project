@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
-public class ChatBotTestSuite extends TestCase{
+public class ChatBotTestSuite {
     private static ChatBot tester;
     private static ChatBot customTester;
 
