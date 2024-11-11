@@ -18,7 +18,7 @@ public class ChatBotTestSuite extends TestCase{
             e.printStackTrace();
             throw new RuntimeException("Failed to initialize ChatBot objects", e);
         }
-    }  
+    }
 
     @Test
     public void testCreateChatBot() {
