@@ -201,7 +201,8 @@ public class JudgePortal extends javax.swing.JFrame {
     private void outputButtonActionPerformed(java.awt.event.ActionEvent evt) 
     {                                             
         // TODO add your handling code here
-        Command producePDFCommand = new CommandProducePDF (judgeSystem);
+        //String filePath = zipFileLabel.getText();
+        Command producePDFCommand = new CommandProducePDF (judgeSystem);//, filePath);
 
         mainSubmissionLabel.setText("Generating the results PDF...");
 
