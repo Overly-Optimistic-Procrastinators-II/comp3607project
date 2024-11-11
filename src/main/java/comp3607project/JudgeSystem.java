@@ -130,8 +130,8 @@ public class JudgeSystem {
 
     private void processExtractedFiles (File dir)
     {
-        FileManager fileManager = new FileManager(dir);
-        FileIterator iterator = fileManager.createFileParser();
+        // FileManager fileManager = new FileManager(dir);
+        // FileIterator iterator = fileManager.createFileParser();
 
         // while  (iterator.hasNext())
         // {

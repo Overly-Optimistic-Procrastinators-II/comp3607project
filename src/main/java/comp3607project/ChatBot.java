@@ -8,6 +8,7 @@ public class ChatBot
     private static int messageLimit = 10;
     private static int messageNumber = 0;
     
+    @SuppressWarnings("unused")
     public ChatBot ()
     {
         ChatBotGenerator chatBotGenerator = new ChatBotGenerator();
@@ -15,6 +16,7 @@ public class ChatBot
         chatBotName = "ChatGPT-3.5";
     }
     
+    @SuppressWarnings("static-access")
     public ChatBot (int LLMCode)
     {
         ChatBotGenerator chatBotGenerator = new ChatBotGenerator();
@@ -32,6 +34,7 @@ public class ChatBot
         return this.numResponsesGenerated;
     }
     
+    @SuppressWarnings("static-access")
     public int getMessageLimit ()
     {
         return this.messageLimit;

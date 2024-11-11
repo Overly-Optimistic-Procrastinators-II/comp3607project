@@ -7,12 +7,12 @@ import com.itextpdf.text.DocumentException;
 public class CommandProducePDF implements Command
 {
     private JudgeSystem judgeSystem;
-    private String filePath;
+    // private String filePath;
 
     public CommandProducePDF (JudgeSystem judgeSystem)
     {
         this.judgeSystem = judgeSystem;
-        this.filePath = filePath;
+        // this.filePath = filePath;
     }
 
     public void execute()

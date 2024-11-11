@@ -1,10 +1,10 @@
 package comp3607project;
 
-import java.util.List;
+// import java.util.List;
 
 public class TestReportGenerator {
     
-    private List<TestResult> report;
+    // private List<TestResult> report;
 
     public TestReportGenerator() {
 
