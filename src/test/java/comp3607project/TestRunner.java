@@ -32,7 +32,7 @@ public class TestRunner {
 
                 if (!fail) {
                     results.add(new TestResult(method.getName(), 
-                                                "Test", 
+                                                method.getName(), 
                                                 "PASS", 
                                                 1));
                 }
