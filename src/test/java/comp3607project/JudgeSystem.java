@@ -15,32 +15,41 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import java.util.ArrayList;
 
 public class JudgeSystem {
     
     private String extractedFilePath;
+    private ArrayList<TestResult> summary;
 
-    public JudgeSystem() 
-    {
-
+    public JudgeSystem() {
+        this.summary = new ArrayList<TestResult>();
     }
 
-    public void evaluateSubmission (String filePath)
-    {
+    public void evaluateSubmission (String filePath) {
         System.out.println ("Evaluating the submission of this file: " + filePath);
         //getExtension(filePath);
+        
         //Code to do testing here
+        summary.clear();
+        TestRunner runner = new TestRunner();
+
+        summary = runner.run(
+            ChatBotGeneratorTestSuite.class, 
+            ChatBotTestSuite.class, 
+            ChatBotPlatformTestSuite.class, 
+            ChatBotSimulationTestSuite.class
+        );
     }
 
-    public void generateResults() throws DocumentException, FileNotFoundException
-    {   
+    public void generateResults() throws DocumentException, FileNotFoundException {   
         System.out.println ("Directory for pdf: " + getExtractedFilePath());
         // File extractedFilesDir = new File("extracted_files");
         // File[] directories = extractedFilesDir.listFiles(File::isDirectory);
@@ -51,8 +60,7 @@ public class JudgeSystem {
         // }
 
         File targetDir = new File (getExtractedFilePath());
-        if (!targetDir.exists() || !targetDir.isDirectory())
-        {
+        if (!targetDir.exists() || !targetDir.isDirectory()) {
             System.out.println ("No valid directory was found!");
             return;
         }
@@ -62,33 +70,32 @@ public class JudgeSystem {
         Document doc = new Document();
 
         try{
-
             PdfWriter.getInstance(doc, new FileOutputStream(new File(targetDir, "results.pdf")));
  
             doc.open();
-            Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+            
+            Paragraph paragraph;
+            Font font = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK);
 
-            Chunk chunk = new Chunk("Hello World", font);
-
-            doc.add(chunk);
-        }
-        catch(FileNotFoundException e)
-        {
+            if (summary.isEmpty()) {
+                paragraph = new Paragraph("This submission has invalid files", font);
+                doc.add(paragraph);
+            }
+            else {
+                for (TestResult result : summary) {
+                    paragraph = new Paragraph(result.toString(), font);
+                    doc.add(paragraph);
+                }
+            }
+        } catch(FileNotFoundException e) {
             System.out.println("File could not be created " + e.getMessage());
-        }
-        catch (DocumentException e)
-        {
+        } catch(DocumentException e) {
             System.out.println("Error ocurred with PDF document " + e.getMessage());
-        }
-        catch(Exception e) 
-        {
+        } catch(Exception e) {
             e.printStackTrace();
-        }
-        finally
-        {
+        } finally{
             doc.close();
         }
-        
     }
 
     public void unzipFiles(String filePath)
@@ -147,37 +154,29 @@ public class JudgeSystem {
         }
     }
 
-    private void processExtractedFiles (File dir)
-    {
-        // FileManager fileManager = new FileManager(dir);
-        // FileIterator iterator = fileManager.createFileParser();
+    private void processExtractedFiles (File dir) {
+        FileManager fileManager = new FileManager(dir);
+        FileIterator iterator = fileManager.createFileParser();
 
-        // while  (iterator.hasNext())
-        // {
-        //     FileType file = iterator.next();
-        //     evaluateSubmission(file.getAbsolutePath());
-        // }
+        while  (iterator.hasNext()) {
+            FileType file = iterator.next();
+            evaluateSubmission(file.getAbsolutePath());
+        }
     }
 
 
-    public boolean getExtension(String filePath)
-    {
+    public boolean getExtension(String filePath) {
         String filename = filePath;
-        if (filename.endsWith(".java")) 
-        {
+        if (filename.endsWith(".java")) {
             //System.out.println(filename + " is a .java file");
             return true;
-        } else 
-        {
+        } else {
             //System.out.println(filename + " is not a .java file");
             return false;
         }
     }
 
-    public String getExtractedFilePath()
-    {
+    public String getExtractedFilePath() {
         return extractedFilePath;
     }
-    
 }
- 
