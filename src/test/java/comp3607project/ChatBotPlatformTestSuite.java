@@ -20,7 +20,7 @@ public class ChatBotPlatformTestSuite {
 
     @Test
     public void testAddChatBot() {
-        Boolean result = testPlatform.addChatBot(1);
+        Boolean result = testPlatform.addChatBot(0);
         assertNotNull(result,"Method must return a non null value");
         assertTrue(result == true || result == false,"Method returned non boolean value");
         assertTrue(testPlatform.getChatBotList().contains("ChatBot Name: ChatGPT-3.5"),"Incorrect Bot Created");
