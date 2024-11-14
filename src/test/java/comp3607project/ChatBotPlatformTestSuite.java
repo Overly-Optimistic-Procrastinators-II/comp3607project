@@ -15,7 +15,7 @@ public class ChatBotPlatformTestSuite {
     public void testCreateChatBotPlatform() {
         assertNotNull(new ChatBotPlatform());
         assertTrue((new ChatBotPlatform()) instanceof ChatBotPlatform);
-        assertEquals(new ArrayList<ChatBot>(), testPlatform.getBots());//i dont know what this line is testing for.
+        assertEquals(new ArrayList<ChatBot>(), testPlatform.getBots());
     }
 
     @Test
