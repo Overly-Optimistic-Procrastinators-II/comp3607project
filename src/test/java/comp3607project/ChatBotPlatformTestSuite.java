@@ -33,8 +33,10 @@ public class ChatBotPlatformTestSuite {
     @Test
     public void testGetChatBotList() {
         // 8 marks
-        //TODO : This test is incomplete. Please add the missing assertions
-        assertTrue(true);
+        String response = testPlatform.getChatBotList();
+        assertNotNull(response,"Method must return a non null value");
+        assertTrue(response instanceof String,"Method returned non String value");
+        assertTrue(response.contains("ChartBot Name: ChatGPT-3.5"),"Incorrect Bot Created");
     }
 
 
