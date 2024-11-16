@@ -1,4 +1,4 @@
-package comp3607project;
+package comp3607project.tool;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -10,6 +10,8 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+
+import comp3607project.TestResult;
 
 import java.util.ArrayList;
 
