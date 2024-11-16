@@ -11,23 +11,30 @@ import java.io.File;
 public class FileManager implements FileContainer {
     private List<FileType> files;
 
-    public FileManager (File dir) {
+    public FileManager (File directory) {
         files = new ArrayList<FileType>();
-        addingJavaFilesFromDirectory(dir);
+        addDirectories(directory);
     }
 
-    private void addingJavaFilesFromDirectory(File dir) {
-        if (dir.isDirectory()) {
-            File [] fileList = dir.listFiles();
+    private void addDirectories(File directory) {
+        if (directory.isDirectory()) {
+            File [] fileList = directory.listFiles();
+            boolean hasJavaFiles = false;
+            
             if (fileList != null) {
                 for (File file : fileList) {
                     if (file.isFile() && getExtension(file.getName())) {
                         files.add(new FileType(file));
+                        hasJavaFiles = true;
                     }
                     else if (file.isDirectory()) {
-                        addingJavaFilesFromDirectory(file);
+                        addDirectories(file);
                     }
                 }
+            }
+
+            if (hasJavaFiles || (fileList != null && fileList.length == 0)) {
+                files.add(new FileType(directory));
             }
         }
     }
