@@ -6,20 +6,13 @@ package comp3607project;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
 import com.itextpdf.text.DocumentException;
 
 import java.util.ArrayList;
 
 public class JudgeSystem {
     
-    private String extractedFilePath;
+    private String uploadPath;
     private ArrayList<TestResult> summary;
 
     public JudgeSystem() {
@@ -43,13 +36,13 @@ public class JudgeSystem {
 
     public void generateResults() throws DocumentException, FileNotFoundException {   
         // System.out.println ("Directory for pdf: " + getExtractedFilePath());
-        File targetDirectory = new File (getExtractedFilePath());
+        File targetDirectory = new File (getUploadPath());
 
         if (!targetDirectory.exists() || !targetDirectory.isDirectory()) {
             System.out.println ("No valid directory was found!");
             return;
         } else {
-            PDFGenerator.generate(extractedFilePath, summary);
+            PDFGenerator.generate(uploadPath, summary);
         }
     }
 
@@ -64,53 +57,17 @@ public class JudgeSystem {
 
     public void unzipFiles(String filePath) {
         System.out.println("Unzipping the files from this file: " + filePath);
-        //Code to unzip files here
 
-        File dir = new File("extracted_files");
+        File directory = new File("uploads");
 
-        if (!dir.exists()) {
-            dir.mkdir();
+        if (!directory.exists()) {
+            directory.mkdir();
         }
 
-        String zipFileName = new File(filePath).getName();
-        String folderName = zipFileName.substring(0, zipFileName.lastIndexOf('.'));
-        File subDir = new File(dir, folderName);
-
-        if (!subDir.exists()) {
-            subDir.mkdir();
-            //System.out.println("Created subdirectory: " + subDir.getAbsolutePath());
-        }
-
-        try (ZipInputStream zipInput = new ZipInputStream(Files.newInputStream(Path.of(filePath)))) {
-            ZipEntry entry;
-            while ((entry = zipInput.getNextEntry()) != null) 
-            {
-                File file = new File(subDir, entry.getName());
-                if (entry.isDirectory()) 
-                {
-                    file.mkdirs(); 
-                    // System.out.println("Created directory: " + file.getAbsolutePath());
-                    System.out.println("Extracted file: " + file.getAbsolutePath());
-                    
-                } else {
-                    if (isJavaFile(file.getName())){
-                        new File(file.getParent()).mkdirs();
-                        Files.copy(zipInput, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                    }
-                }
-                zipInput.closeEntry();
-            }
-            System.out.println("Unzipping completed.");
-
-            extractedFilePath = subDir.getAbsolutePath();
-            System.out.println ("Extracted file path: " + getExtractedFilePath());
-            processExtractedFiles(dir);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.uploadPath = ZipFileHandler.unzip(filePath, directory);
     }
 
-    private void processExtractedFiles (File dir) {
+    private void processUploads (File dir) {
         FileManager fileManager = new FileManager(dir);
         FileIterator iterator = fileManager.createFileParser();
 
@@ -120,13 +77,7 @@ public class JudgeSystem {
         }
     }
 
-
-    private boolean isJavaFile(String filePath) {
-        return ((filePath.endsWith(".java") ? true : false));
-    }
-
-
-    public String getExtractedFilePath() {
-        return extractedFilePath;
+    public String getUploadPath() {
+        return this.uploadPath;
     }
 }
