@@ -65,10 +65,11 @@ public class JudgeSystem {
         }
 
         this.uploadPath = ZipFileHandler.unzip(filePath, directory);
+        processUploads(directory);
     }
 
-    private void processUploads (File dir) {
-        FileManager fileManager = new FileManager(dir);
+    private void processUploads (File directory) {
+        FileManager fileManager = new FileManager(directory);
         FileIterator iterator = fileManager.createFileParser();
 
         while  (iterator.hasNext()) {
