@@ -1,4 +1,4 @@
-package comp3607project;
+package comp3607project.tool;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;

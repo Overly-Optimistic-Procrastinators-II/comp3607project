@@ -1,8 +1,10 @@
-package comp3607project;
+package comp3607project.tool;
 
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
+
+import comp3607project.TestResult;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

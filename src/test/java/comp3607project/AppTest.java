@@ -2,6 +2,12 @@ package comp3607project;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
+import comp3607project.file.FileIterator;
+import comp3607project.file.FileManager;
+import comp3607project.file.FileParser;
+import comp3607project.file.FileType;
+
 import java.io.File;
 import java.util.List;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package comp3607project;
+package comp3607project.suite;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,6 +8,8 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import comp3607project.ChatBotSimulation;
 
 public class ChatBotSimulationTestSuite {
     

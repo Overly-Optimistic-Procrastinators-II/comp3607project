@@ -8,6 +8,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import com.itextpdf.text.DocumentException;
 
+import comp3607project.file.FileIterator;
+import comp3607project.file.FileManager;
+import comp3607project.file.FileType;
+import comp3607project.file.ZipFileHandler;
+import comp3607project.suite.ChatBotGeneratorTestSuite;
+import comp3607project.suite.ChatBotPlatformTestSuite;
+import comp3607project.suite.ChatBotSimulationTestSuite;
+import comp3607project.suite.ChatBotTestSuite;
+import comp3607project.tool.TestRunner;
+
 import java.util.ArrayList;
 
 public class JudgeSystem {

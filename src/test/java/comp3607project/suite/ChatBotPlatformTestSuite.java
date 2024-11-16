@@ -1,7 +1,11 @@
-package comp3607project;
+package comp3607project.suite;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
+import comp3607project.ChatBot;
+import comp3607project.ChatBotPlatform;
+
 import java.util.ArrayList;
 // import org.junit.BeforeClass;
 

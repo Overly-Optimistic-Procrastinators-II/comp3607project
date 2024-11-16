@@ -1,4 +1,4 @@
-package comp3607project;
+package comp3607project.file;
 
 import java.io.File;
 import java.io.IOException;
