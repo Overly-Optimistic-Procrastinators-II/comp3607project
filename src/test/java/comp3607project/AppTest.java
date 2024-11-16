@@ -32,8 +32,7 @@ public class AppTest {
         assertTrue((new JudgePortal()) instanceof JudgePortal);
     }
 
-
-    //General Test for Command Classes -- May require minor additions to the classes (getJudgeSystem and getFilePath)
+    
     @Test
     public void testCommandProducePDF() {
         JudgeSystem judgeSystem = new JudgeSystem();
@@ -41,10 +40,7 @@ public class AppTest {
         assertTrue(command instanceof CommandProducePDF); 
     }
 
-    //Specialized Tests for Command Classes execute function -- To be Done tmr if not finished today
 
-
-    //Test for Files -- No idea what to add for param for FileManager all other tests are passing
     @Test
     public void testCreateFileParser() {
         FileManager manager = new FileManager(new File(""));
@@ -63,17 +59,16 @@ public class AppTest {
     }
 
 
-    @Test // Minor additions needed to FileParser(getFiles)
+    @Test
     public void testFileParserConstructor() {
         List<FileType> files = new ArrayList<>();
         File testFile1 = new File("test1.java");
-        File testFile2 = new File("test2.java");
         files.add(new FileType(testFile1));
-        files.add(new FileType(testFile2));
-
-        //FileParser fileParser = new FileParser(files);
-
-        //assertEquals(files, fileParser.getFiles(), "Files should match");
+        FileParser fileParser = new FileParser(files);
+        
+        assertTrue(fileParser.hasNext(), "Should return true before first file");
+        fileParser.next();
+        assertFalse(fileParser.hasNext(), "Should return false after last file");
     }
 
 
@@ -111,12 +106,12 @@ public class AppTest {
     }
 
 
-    @Test // need to add getFile to FileType
+    @Test
     public void testFileTypeConstructor() {
         File file = new File("test.java");
         FileType fileType = new FileType(file);
 
-        //assertEquals(file, fileType.getFile());
+        assertEquals(file, fileType.getFile());
     }
 
 

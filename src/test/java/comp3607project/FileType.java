@@ -2,22 +2,22 @@ package comp3607project;
 
 import java.io.File;
 
-public class FileType 
-{
+public class FileType {
     private File file;
 
-    public FileType(File file) 
-    {
+    public FileType(File file) {
         this.file = file;
     }
 
-    public String getAbsolutePath() 
-    {
+    public String getAbsolutePath() {
         return file.getAbsolutePath();
     }
 
-    public String getName() 
-    {
+    public String getName() {
         return file.getName();
+    }
+
+    public File getFile() {
+        return file;
     }
 }
