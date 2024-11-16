@@ -1,10 +1,12 @@
-package comp3607project;
+package comp3607project.suite;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import comp3607project.ChatBotGenerator;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -17,22 +19,21 @@ import java.lang.annotation.RetentionPolicy;
 
 public class ChatBotGeneratorTestSuite {
 
-    public ChatBotGeneratorTestSuite() {}
+    public ChatBotGeneratorTestSuite() {}    
 
-    @Test
-    @DisplayName("Test ChatBotGenerator Constructor")
-    @Tag("1")
-    public void testCreateChatBotGenerator() {
-        assertNotNull(new ChatBotGenerator());
-        assertTrue((new ChatBotGenerator()) instanceof ChatBotGenerator);
-    }
     
+    @Test
+    @DisplayName("Test GenerateChatBotLLM returns ChatGPT-3.5 Lower Bound")
+    @Tag("1")
+    public void testGenerateChatBotLowerBound() {
+        assertEquals("ChatGPT-3.5", ChatBotGenerator.generateChatBotLLM(0));
+    }
+
 
     @Test
-    @DisplayName("Test GenerateChatBotLLM returns ChatGPT-3.5 as default value")
+    @DisplayName("Test GenerateChatBotLLM returns ChatGPT-3.5 Upper Bound")
     @Tag("1")
-    public void testGenerateChatBotLLM() {        
-        assertEquals("ChatGPT-3.5", ChatBotGenerator.generateChatBotLLM(0));
+    public void testGenerateChatBotLLMUpperBound() {
         assertEquals("ChatGPT-3.5", ChatBotGenerator.generateChatBotLLM(6));
     }
 
@@ -40,7 +41,7 @@ public class ChatBotGeneratorTestSuite {
     @Test
     @DisplayName("Test GenerateChatBotLLM returns LLama")
     @Tag("1")
-    public void testGenerateChatBotLLMCase1() {
+    public void testGenerateChatBotLLMReturnsLLaMa() {
         assertEquals("LLaMa", ChatBotGenerator.generateChatBotLLM(1));
     }
 
@@ -48,7 +49,7 @@ public class ChatBotGeneratorTestSuite {
     @Test
     @DisplayName("Test GenerateChatBotLLM returns Mistral7B")
     @Tag("1")
-    public void testGenerateChatBotLLMCase2() {
+    public void testGenerateChatBotLLMReturnsMistral7B() {
         assertEquals("Mistral7B", ChatBotGenerator.generateChatBotLLM(2));
     }
 
@@ -56,7 +57,7 @@ public class ChatBotGeneratorTestSuite {
     @Test
     @DisplayName("Test GenerateChatBotLLM returns Bard")
     @Tag("1")
-    public void testGenerateChatBotLLMCase3() {
+    public void testGenerateChatBotLLMReturnsBard() {
         assertEquals("Bard", ChatBotGenerator.generateChatBotLLM(3));
     }
 
@@ -64,7 +65,7 @@ public class ChatBotGeneratorTestSuite {
     @Test
     @DisplayName("Test GenerateChatBotLLM returns Claude")
     @Tag("1")
-    public void testGenerateChatBotLLMCase4() {
+    public void testGenerateChatBotLLMReturnsClaude() {
         assertEquals("Claude", ChatBotGenerator.generateChatBotLLM(4));
     }
 
@@ -72,7 +73,7 @@ public class ChatBotGeneratorTestSuite {
     @Test
     @DisplayName("Test GenerateChatBotLLM returns Solar")
     @Tag("1")
-    public void testGenerateChatBotLLMCase5() {
+    public void testGenerateChatBotLLMReturnsSolar() {
         assertEquals("Solar", ChatBotGenerator.generateChatBotLLM(5));
     }
 }

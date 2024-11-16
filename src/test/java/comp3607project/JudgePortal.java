@@ -4,7 +4,6 @@
 
 package comp3607project;
 
-
 import javax.swing.*;
 import java.io.File;
 
@@ -16,19 +15,16 @@ public class JudgePortal extends javax.swing.JFrame {
     /**
      * Creates new form judgePortal
      */
-    public JudgePortal() 
-    {
+    public JudgePortal() {
         initComponents();
     }
 
-    public JudgePortal (JudgeSystem system)
-    {
+    public JudgePortal (JudgeSystem system) {
         initComponents();
         this.judgeSystem = system;
 
         outputButton.setVisible(false);
         evaluateButton.setVisible(false);
-        
     }
 
     /**
@@ -150,14 +146,8 @@ public class JudgePortal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
     
-    
-            
 
-
-    private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        // TODO add your handling code here:
-
-        
+    private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {
         evaluateButton.setVisible(true);
         
         JFileChooser fileChooser = new JFileChooser();
@@ -176,14 +166,10 @@ public class JudgePortal extends javax.swing.JFrame {
 
             evaluateButton.setVisible(true);
         }
-    }                                            
+    }
 
-    private void evaluateButtonActionPerformed(java.awt.event.ActionEvent evt) 
-    {                                               
-
-        // TODO add your handling code here:
+    private void evaluateButtonActionPerformed(java.awt.event.ActionEvent evt) {
         outputButton.setVisible(true);
-        
         
         String filePath = zipFileLabel.getText();
 
@@ -194,17 +180,13 @@ public class JudgePortal extends javax.swing.JFrame {
         invoker.pressButton();
     }                                              
 
-    private void outputButtonActionPerformed(java.awt.event.ActionEvent evt) 
-    {                                             
-        // TODO add your handling code here
-        //String filePath = zipFileLabel.getText();
+    private void outputButtonActionPerformed(java.awt.event.ActionEvent evt) {
         Command producePDFCommand = new CommandProducePDF (judgeSystem);//, filePath);
 
         mainSubmissionLabel.setText("Generating the results PDF...");
 
         invoker.setCommand(producePDFCommand);
         invoker.pressButton();
-
     }                                            
 
     /**

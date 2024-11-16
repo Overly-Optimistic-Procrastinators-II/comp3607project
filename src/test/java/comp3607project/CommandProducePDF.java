@@ -1,34 +1,21 @@
 package comp3607project;
 
 import java.io.FileNotFoundException;
-
 import com.itextpdf.text.DocumentException;
 
-public class CommandProducePDF implements Command
-{
+public class CommandProducePDF implements Command {
     private JudgeSystem judgeSystem;
-    private String filePath;
 
-    public CommandProducePDF (JudgeSystem judgeSystem)//, String filePath)
-    {
+    public CommandProducePDF (JudgeSystem judgeSystem) {
         this.judgeSystem = judgeSystem;
-        //this.filePath = filePath;
     }
 
-    public void execute()
-    {
-        try 
-        {
-            judgeSystem.generateResults();//filePath);
-        } 
-        catch (FileNotFoundException e) 
-        {
-            // TODO Auto-generated catch block
+    public void execute() {
+        try {
+            judgeSystem.generateResults();
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } 
-        catch (DocumentException e) 
-        {
-            // TODO Auto-generated catch block
+        } catch (DocumentException e) {
             e.printStackTrace();
         }
     }
