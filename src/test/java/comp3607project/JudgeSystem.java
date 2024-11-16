@@ -32,8 +32,7 @@ public class JudgeSystem {
 
     public void evaluateSubmission (String filePath) {
         System.out.println ("Evaluating the submission of this file: " + filePath);
-        
-        //Code to do testing here
+
         summary.clear();
         TestRunner runner = new TestRunner();
 
@@ -46,25 +45,16 @@ public class JudgeSystem {
     }
 
     public void generateResults() throws DocumentException, FileNotFoundException {   
-        // System.out.println ("Directory for pdf: " + getExtractedFilePath());
+        System.out.println ("Directory for pdf: " + getUploadPath());
         File targetDirectory = new File (getUploadPath());
 
         if (!targetDirectory.exists() || !targetDirectory.isDirectory()) {
             System.out.println ("No valid directory was found!");
             return;
         } else {
-            PDFGenerator.generate(uploadPath, summary);
+            PDFGenerator.generate(getUploadPath(), summary);
         }
     }
-
-    // File extractedFilesDir = new File("extracted_files");
-        // File[] directories = extractedFilesDir.listFiles(File::isDirectory);
-        // File targetDir = new File("");
-        // if (directories != null && directories.length > 0) 
-        // {
-        //    targetDir = directories[0];
-        // }
-
 
     public void unzipFiles(String filePath) {
         System.out.println("Unzipping the files from this file: " + filePath);
@@ -76,10 +66,21 @@ public class JudgeSystem {
         }
 
         this.uploadPath = ZipFileHandler.unzip(filePath, directory);
-        processUploads(directory);
+        processUploads(); //(directory);
     }
 
-    private void processUploads (File directory) {
+    private void processUploads () { // (File directory) {
+        // FileManager fileManager;
+        // FileIterator iterator;
+
+        // File extractedFilesDir = new File("extracted_files");
+        // File[] directories = extractedFilesDir.listFiles(File::isDirectory);
+        // File targetDir = new File("");
+        // if (directories != null && directories.length > 0) 
+        // {
+        //    targetDir = directories[0];
+        // }
+        File directory = new File("uploads");
         FileManager fileManager = new FileManager(directory);
         FileIterator iterator = fileManager.createFileParser();
 
@@ -91,5 +92,9 @@ public class JudgeSystem {
 
     public String getUploadPath() {
         return this.uploadPath;
+    }
+
+    public void setUploadPath(String uploadPath) {
+        this.uploadPath = uploadPath;
     }
 }
