@@ -1,5 +1,4 @@
 package comp3607project;
-//Student ID: 816036534
 
 public class ChatBot
 {

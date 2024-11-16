@@ -51,6 +51,7 @@ public class JudgeSystem {
 
     public void generateResults() throws DocumentException, FileNotFoundException {   
         System.out.println ("Directory for pdf: " + getExtractedFilePath());
+
         // File extractedFilesDir = new File("extracted_files");
         // File[] directories = extractedFilesDir.listFiles(File::isDirectory);
         // File targetDir = new File("");

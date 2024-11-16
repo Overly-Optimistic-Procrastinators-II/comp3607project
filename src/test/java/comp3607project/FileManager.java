@@ -21,6 +21,8 @@ public class FileManager implements FileContainer {
     {
         files = new ArrayList<FileType>();
         addingJavaFilesFromDirectory(dir);
+
+        //double check
     }
 
     private void addingJavaFilesFromDirectory(File dir)
