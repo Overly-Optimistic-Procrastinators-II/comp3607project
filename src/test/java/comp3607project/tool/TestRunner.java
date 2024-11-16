@@ -5,6 +5,7 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
 import comp3607project.TestResult;
+import comp3607project.suite.TestMetaData;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -38,11 +39,20 @@ public class TestRunner {
 
     private void addPasses(Class<?> testClass) {
         for (Method method : testClass.getMethods()) {
-            if (!isFailure(method)) {
-                summary.add(new TestResult(method.getName(), 
-                                            method.getName(), 
-                                            "PASS", 
-                                            1));
+            
+            TestMetaData metadata = method.getAnnotation(TestMetaData.class);
+            String description = (metadata != null) ? metadata.description() : "No description available";
+            int mark = ((metadata != null) ? Integer.parseInt(metadata.marks()) : -1);
+
+            if (!isFailure(method) && !isIgnored(description, mark)) {
+                summary.add(
+                    new TestResult(
+                        method.getName(), 
+                        description, 
+                        "PASS", 
+                        mark
+                    )
+                );
             }
         }
     }
@@ -55,6 +65,10 @@ public class TestRunner {
         }
 
         return false;
+    }
+
+    private boolean isIgnored(String description, int mark) {
+        return ((description.equals("No description available") || mark == -1) ? true : false);
     }
 }
 
