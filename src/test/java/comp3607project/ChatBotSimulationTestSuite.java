@@ -64,7 +64,8 @@ public class ChatBotSimulationTestSuite {
     public void testChatBotPlatformGetChatBotList() {
         // 2 marks
         assertTrue(output.contains("Bot Number"));
-        //cannot figure out how to get the other mark out of this one but you can tell what I was doing with the output cap and what not
+
+        //TODO: cannot figure out how to get the other mark out of this one but you can tell what I was doing with the output cap and what not
         //NewJeans Ditto might be the greatest song on this planet.
     }
 
