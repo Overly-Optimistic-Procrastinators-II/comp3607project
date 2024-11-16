@@ -1,11 +1,13 @@
 package comp3607project.suite;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import comp3607project.ChatBot;
-
-import org.junit.jupiter.api.BeforeEach;
 
 public class ChatBotTestSuite {
     private static ChatBot tester;
@@ -27,14 +29,16 @@ public class ChatBotTestSuite {
     @Test
     public void testChatBotConstructor() {
         // 3 marks
-        // TODO : Implement test for ChatBot constructor
+        ChatBot botT = new ChatBot();
+        assertEquals("ChatGPT-3.5", botT.getChatBotName());
     }
 
 
     @Test
     public void testChatBotOverloadedConstructor() {
         // 3 marks
-        // TODO: Implement test for ChatBot overloaded constructor
+        ChatBot botT = new ChatBot(1);
+        assertEquals("LLaMa", botT.getChatBotName());
     }
 
 

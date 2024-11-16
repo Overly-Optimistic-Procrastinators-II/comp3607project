@@ -1,40 +1,41 @@
 package comp3607project.suite;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import comp3607project.ChatBotSimulation;
 
-public class ChatBotSimulationTestSuite {
+class ChatBotSimulationTestSuite {
     
     public ChatBotSimulationTestSuite() {}
-    private ChatBotSimulation sim;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
     private final PrintStream standardOut = System.out;
     protected String output;
 
     @BeforeEach
+    @SuppressWarnings("unused")
     void setUp(){
-        sim = new ChatBotSimulation();
+        new ChatBotSimulation();
         System.setOut(new PrintStream(outputStreamCaptor));
         ChatBotSimulation.main(new String[]{});
         output = outputStreamCaptor.toString();
     }
 
     @AfterEach
+    @SuppressWarnings("unused")
     void tearDown(){
         System.setOut(standardOut);
         outputStreamCaptor.reset();
     }
 
     @Test
-    public void testChatBotSimulation() {
+    void testChatBotSimulation() {
         // 1 mark
         assertTrue(output.contains("Hello World"));
         assertEquals("Hello World!", output.lines().findFirst().get().trim());
@@ -42,7 +43,7 @@ public class ChatBotSimulationTestSuite {
 
 
     @Test
-    public void testCreateChatBotPlatform() {
+    void testCreateChatBotPlatform() {
         // 1 mark
         assertTrue(output.contains("Your ChatBots"));
         assertTrue(output.indexOf("Hello World!") < output.indexOf("Your ChatBots"));
@@ -50,7 +51,7 @@ public class ChatBotSimulationTestSuite {
 
 
     @Test
-    public void testAddChatBotToPlatform() {
+    void testAddChatBotToPlatform() {
         // 2 marks
         // long errorCount = output.lines().filter(line -> line.contains("Error")).count();
         // assertEquals(0, errorCount, "There should be no errors when adding bots");
@@ -63,7 +64,7 @@ public class ChatBotSimulationTestSuite {
 
 
     @Test
-    public void testChatBotPlatformGetChatBotList() {
+    void testChatBotPlatformGetChatBotList() {
         // 2 marks
         assertTrue(output.contains("Bot Number"));
 
@@ -73,28 +74,23 @@ public class ChatBotSimulationTestSuite {
 
 
     @Test
-    public void testChatBotPlatfomInteractWithBot() {
+    void testChatBotPlatfomInteractWithBot() {
         // 4 marks
         long firstInteractions = output.lines()
                             .filter(line->line.contains("Response from"))
                             .count();
         long secondInteractions = output.lines()
                                     .filter(line ->line.contains("Incorrect Bot Number") || line.contains("Daily Limit Reached. Wait 24 hours to resume chatbot usage"))
-                                    .count();                                    
+                                    .count();
         assertTrue(firstInteractions <=10, "There should be at most 10 interactions with a response message");
         assertTrue(secondInteractions >=5, "There should be at least 5 interactions with an Incorrect Bot message or a Daily limit message");
     }
 
 
     @Test
-    public void testChatBotPlatformGetChatBotListUpdated() {
+    void testChatBotPlatformGetChatBotListUpdated() {
         // 2 marks
-
-
-        int firstListIndex = output.indexOf("Your ChatBots");
-        int secondListIndex = output.lastIndexOf("Your ChatBots");
-
-        assertTrue(output.indexOf("Your ChatBots") != -1, "There should be a list of chatbots");
+        assertTrue(output.contains("Your ChatBots"), "There should be a list of chatbots");
         assertTrue(output.lastIndexOf("Your ChatBots") != output.indexOf("Your ChatBots"), "There should be a second list of chatbots");
         assertTrue(output.indexOf("Your ChatBots")<output.lastIndexOf("Your ChatBots"));
     }
