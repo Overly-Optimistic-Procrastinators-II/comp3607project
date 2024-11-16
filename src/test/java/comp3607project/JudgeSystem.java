@@ -12,9 +12,11 @@ import comp3607project.file.FileIterator;
 import comp3607project.file.FileManager;
 import comp3607project.file.FileType;
 import comp3607project.suite.ChatBotGeneratorTestSuite;
-import comp3607project.suite.ChatBotPlatformTestSuite;
-import comp3607project.suite.ChatBotSimulationTestSuite;
-import comp3607project.suite.ChatBotTestSuite;
+// import comp3607project.suite.ChatBotPlatformTestSuite;
+// import comp3607project.suite.ChatBotSimulationTestSuite;
+// import comp3607project.suite.ChatBotTestSuite;
+// import comp3607project.tool.ClassHolder;
+import comp3607project.tool.DynamicJavaCompiler;
 import comp3607project.tool.PDFGenerator;
 import comp3607project.tool.TestRunner;
 import comp3607project.tool.ZipFileHandler;
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 
 public class JudgeSystem {
     
-    private String uploadPath;
+    private static String uploadPath;
     private ArrayList<TestResult> summary;
 
     public JudgeSystem() {
@@ -34,14 +36,24 @@ public class JudgeSystem {
         System.out.println ("Evaluating the submission of this file: " + filePath);
 
         summary.clear();
-        TestRunner runner = new TestRunner();
+        try {
+            DynamicJavaCompiler.compile(filePath);
 
-        summary = runner.run(
-            ChatBotGeneratorTestSuite.class, 
-            ChatBotTestSuite.class, 
-            ChatBotPlatformTestSuite.class, 
-            ChatBotSimulationTestSuite.class
-        );
+            TestRunner runner = new TestRunner();
+
+            // summary = runner.run(
+            //     ChatBotGeneratorTestSuite.class, 
+            //     ChatBotTestSuite.class, 
+            //     ChatBotPlatformTestSuite.class, 
+            //     ChatBotSimulationTestSuite.class
+            // );
+
+            summary = runner.run(ChatBotGeneratorTestSuite.class);
+
+            generateResults();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     public void generateResults() throws DocumentException, FileNotFoundException {   
@@ -65,36 +77,33 @@ public class JudgeSystem {
             directory.mkdir();
         }
 
-        this.uploadPath = ZipFileHandler.unzip(filePath, directory);
-        processUploads(); //(directory);
+        setUploadPath(ZipFileHandler.unzip(filePath, directory));
+        processUploads(directory);
     }
 
-    private void processUploads () { // (File directory) {
-        // FileManager fileManager;
-        // FileIterator iterator;
-
-        // File extractedFilesDir = new File("extracted_files");
-        // File[] directories = extractedFilesDir.listFiles(File::isDirectory);
-        // File targetDir = new File("");
-        // if (directories != null && directories.length > 0) 
-        // {
-        //    targetDir = directories[0];
-        // }
-        File directory = new File("uploads");
-        FileManager fileManager = new FileManager(directory);
+    private void processUploads(File directory) {
+        FileManager fileManager = new FileManager(new File("uploads"));
         FileIterator iterator = fileManager.createFileParser();
 
         while  (iterator.hasNext()) {
             FileType file = iterator.next();
-            evaluateSubmission(file.getAbsolutePath());
+            setUploadPath(file.getAbsolutePath());
+            evaluateSubmission(getUploadPath());
         }
+        // FileManager fileManager = new FileManager(directory);
+        // FileIterator iterator = fileManager.createFileParser();
+
+        // while(iterator.hasNext()) {
+        //     FileType file = iterator.next();
+        //     evaluateSubmission(file.getAbsolutePath());
+        // }
     }
 
-    public String getUploadPath() {
-        return this.uploadPath;
+    public static String getUploadPath() {
+        return uploadPath;
     }
 
-    public void setUploadPath(String uploadPath) {
-        this.uploadPath = uploadPath;
+    public static void setUploadPath(String classPath) {
+        uploadPath = classPath;
     }
 }
