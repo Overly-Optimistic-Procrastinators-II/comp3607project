@@ -5,8 +5,9 @@
 package comp3607project;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import com.itextpdf.text.DocumentException;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import comp3607project.file.FileIterator;
 import comp3607project.file.FileManager;
@@ -22,11 +23,12 @@ import comp3607project.tool.ZipFileHandler;
 
 import java.util.ArrayList;
 
-public class JudgeSystem {
-    
+public class JudgeSystem {   
     private static String uploadPath;
     private ArrayList<TestResult> summary;
-    private int totalMark = 0;
+    private static int grade;
+    private static boolean isCompiled;
+    private static URLClassLoader classLoader;
 
     public JudgeSystem() {
         this.summary = new ArrayList<TestResult>();
@@ -36,10 +38,12 @@ public class JudgeSystem {
         System.out.println ("Evaluating the submission of this file: " + filePath);
 
         summary.clear();
-        totalMark = 0;
-
+        grade = 0;
+        isCompiled = compileSubmission(filePath);
+        
         try {
-            DynamicJavaCompiler.compile(filePath);
+            loadClasses(filePath);
+
             TestRunner runner = new TestRunner();
 
             summary = runner.run(
@@ -53,17 +57,24 @@ public class JudgeSystem {
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
+
+        unloadClasses();
     }
 
-    public void generateResults() throws DocumentException, FileNotFoundException {   
-        System.out.println ("Directory for pdf: " + getUploadPath());
-        File targetDirectory = new File (getUploadPath());
+    public void generateResults() {
+        try{
+            System.out.println ("Directory for pdf: " + getUploadPath());
+            File targetDirectory = new File (getUploadPath());
 
-        if (!targetDirectory.exists() || !targetDirectory.isDirectory()) {
-            System.out.println ("No valid directory was found!");
-            return;
-        } else {
-            PDFGenerator.generate(getUploadPath(), summary, calculateMark());
+            if (!targetDirectory.exists() || !targetDirectory.isDirectory()) {
+                System.out.println ("No valid directory was found!");
+                return;
+            } else {
+                calculateMark();
+                PDFGenerator.generate(getUploadPath(), summary);
+            }
+        } catch (Exception e) {
+            System.err.println("Could not create PDF");
         }
     }
 
@@ -91,6 +102,37 @@ public class JudgeSystem {
         }
     }
 
+    private boolean compileSubmission(String filePath) {
+        try {
+            DynamicJavaCompiler.compile(filePath);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void loadClasses(String filePath) {
+        try {
+            classLoader = URLClassLoader.newInstance(new URL[] {
+                new File(filePath).toURI().toURL()
+            });
+        } catch (Exception e) {
+            System.out.println("Could not load classes");
+        }
+    }
+
+    private void unloadClasses() {
+        if (classLoader != null) {
+            try {
+                classLoader.close();
+            } catch (IOException e) {
+                System.err.println("Could not close class loader");
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static String getUploadPath() {
         return uploadPath;
     }
@@ -99,11 +141,17 @@ public class JudgeSystem {
         uploadPath = classPath;
     }
 
-    public int calculateMark() {
+    private void calculateMark() {
         for(TestResult s : summary) {
-            totalMark += s.getMark();
+            grade += s.getMark();
         }
-        
-        return totalMark;
+
+        if (isCompiled) {
+            grade += 15;
+        }
+    }
+
+    public static int getGrade() {
+        return grade;
     }
 }

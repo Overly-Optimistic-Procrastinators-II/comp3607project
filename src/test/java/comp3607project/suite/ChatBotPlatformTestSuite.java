@@ -5,8 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
-import comp3607project.JudgeSystem;
-import comp3607project.tool.ClassHolder;
+import comp3607project.tool.DynamicClassLoader;
+
+// import comp3607project.JudgeSystem;
 
 // import java.util.ArrayList;
 
@@ -18,8 +19,11 @@ public class ChatBotPlatformTestSuite {
 
     @Before
     public void setup() {
-        ClassHolder holder = new ClassHolder(JudgeSystem.getUploadPath());
-        ChatBotPlatform = ClassHolder.getChatBotPlatform();
+        try {
+            ChatBotPlatform = DynamicClassLoader.getClass("ChatBotPlatform");
+        } catch (ClassNotFoundException e) {
+            ChatBotPlatform = null;
+        }
     }
     
 

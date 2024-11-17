@@ -10,8 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
-import comp3607project.JudgeSystem;
-import comp3607project.tool.ClassHolder;
+import comp3607project.tool.DynamicClassLoader;
 
 public class ChatBotSimulationTestSuite {
     private Class<?> ChatBotSimulation;
@@ -23,11 +22,17 @@ public class ChatBotSimulationTestSuite {
     protected String output;
 
     @Before
-    void setUp() throws Exception{
-        ClassHolder holder = new ClassHolder(JudgeSystem.getUploadPath());
-        ChatBotSimulation = ClassHolder.getChatBotSimulation();
-        System.setOut(new PrintStream(outputStreamCaptor));
-        invokeMain();
+    void setUp() {
+        try {
+            ChatBotSimulation = DynamicClassLoader.getClass("ChatBotSimulation");
+            System.setOut(new PrintStream(outputStreamCaptor));
+            invokeMain();
+        } catch (ClassNotFoundException e) {
+            ChatBotSimulation = null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         output = outputStreamCaptor.toString();
     }
     

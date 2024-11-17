@@ -12,20 +12,23 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
+
+import comp3607project.JudgeSystem;
 import comp3607project.TestResult;
 
 import java.util.ArrayList;
 
 public class PDFGenerator {
-    private static Font defaultFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK);
+    private static Font defaultFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK);
     private static Font headerFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 14, Font.BOLD, BaseColor.BLACK);
-    public static void generate(String filePath, ArrayList<TestResult> summary, int totalMark) {
+    private static Font cellFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK);
+    
+    public static void generate(String filePath, ArrayList<TestResult> summary) {
         try {
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(new File(filePath, "results.pdf")));
             document.open();
             addMetaData(document);
-            document.add(new Paragraph("Total Mark: " + totalMark + "\n"));
             addContent(document, summary);
             document.close();
         } catch (Exception e) {
@@ -34,9 +37,11 @@ public class PDFGenerator {
     }
 
     private static void addContent(Document document, ArrayList<TestResult> summary) throws DocumentException {
+        document.add(new Paragraph(("Grade: " + JudgeSystem.getGrade() + "/100"), defaultFont));
+        document.add(new Paragraph(" "));
+        
         PdfPTable table = new PdfPTable(3); 
-        table.setWidthPercentage(105); 
-    
+        table.setWidthPercentage(100);     
         
         PdfPCell headerCell1 = new PdfPCell(new Paragraph("Description", headerFont));
         headerCell1.setBackgroundColor(BaseColor.PINK); // Set background color for header
@@ -55,19 +60,17 @@ public class PDFGenerator {
 
         if (summary.isEmpty()) {
             document.add(new Paragraph("This submission has invalid files", defaultFont));
-        }
-
-        else {
+        } else {
             for (TestResult result : summary) {
-                PdfPCell nameCell = new PdfPCell(new Paragraph(result.getTestName(), defaultFont));
+                PdfPCell nameCell = new PdfPCell(new Paragraph(result.getTestName(), cellFont));
                 nameCell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 table.addCell(nameCell);
 
-                PdfPCell scoreCell = new PdfPCell(new Paragraph(String.valueOf(result.getStatus()), defaultFont));
+                PdfPCell scoreCell = new PdfPCell(new Paragraph(String.valueOf(result.getStatus()), cellFont));
                 scoreCell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER); 
                 table.addCell(scoreCell);
 
-                PdfPCell commentsCell = new PdfPCell(new Paragraph(String.valueOf(result.getMark()), defaultFont));
+                PdfPCell commentsCell = new PdfPCell(new Paragraph(String.valueOf(result.getMark()), cellFont));
                 commentsCell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER); 
                 table.addCell(commentsCell);
             }

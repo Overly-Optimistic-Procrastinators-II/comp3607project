@@ -11,18 +11,22 @@ import org.junit.Before;
 // import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import comp3607project.JudgeSystem;
-import comp3607project.tool.ClassHolder;
+import comp3607project.tool.DynamicClassLoader;
+
+// import comp3607project.JudgeSystem;
 
 public class ChatBotTestSuite {
+    private Class<?> ChatBot;
     // private static Object tester;
     // private static Object customTester;
-    private Class<?> ChatBot;
 
     @Before
     public void setup() {
-        ClassHolder holder = new ClassHolder(JudgeSystem.getUploadPath());
-        ChatBot = ClassHolder.getChatBot();
+        try {
+            ChatBot = DynamicClassLoader.getClass("ChatBot");
+        } catch (ClassNotFoundException e) {
+            ChatBot = null;
+        }
     }
 
     // @BeforeEach
