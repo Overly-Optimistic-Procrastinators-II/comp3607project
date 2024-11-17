@@ -25,8 +25,8 @@ public class PDFGenerator {
             PdfWriter.getInstance(document, new FileOutputStream(new File(filePath, "results.pdf")));
             document.open();
             addMetaData(document);
+            document.add(new Paragraph("Total Mark: " + totalMark + "\n"));
             addContent(document, summary);
-            document.add(new Paragraph("Total Mark: " + totalMark));
             document.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,9 +34,25 @@ public class PDFGenerator {
     }
 
     private static void addContent(Document document, ArrayList<TestResult> summary) throws DocumentException {
-
-        PdfPTable table = new PdfPTable(3);
+        PdfPTable table = new PdfPTable(3); 
+        table.setWidthPercentage(105); 
+    
         
+        PdfPCell headerCell1 = new PdfPCell(new Paragraph("Description", headerFont));
+        headerCell1.setBackgroundColor(BaseColor.PINK); // Set background color for header
+        headerCell1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER); // Center align the header
+        table.addCell(headerCell1);
+
+        PdfPCell headerCell2 = new PdfPCell(new Paragraph("Status", headerFont));
+        headerCell2.setBackgroundColor(BaseColor.PINK);
+        headerCell2.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+        table.addCell(headerCell2);
+
+        PdfPCell headerCell3 = new PdfPCell(new Paragraph("Mark", headerFont));
+        headerCell3.setBackgroundColor(BaseColor.PINK);
+        headerCell3.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+        table.addCell(headerCell3);
+
         if (summary.isEmpty()) {
             document.add(new Paragraph("This submission has invalid files", defaultFont));
         }
@@ -56,6 +72,8 @@ public class PDFGenerator {
                 table.addCell(commentsCell);
             }
         }
+
+        document.add(table); // Add the table to the document
     }
 
     private static void addMetaData(Document document) {
