@@ -34,6 +34,9 @@ public class PDFGenerator {
     }
 
     private static void addContent(Document document, ArrayList<TestResult> summary) throws DocumentException {
+
+        PdfPTable table = new PdfPTable(3);
+        
         if (summary.isEmpty()) {
             document.add(new Paragraph("This submission has invalid files", defaultFont));
         }
