@@ -23,7 +23,6 @@ public class JudgePortal extends javax.swing.JFrame {
         initComponents();
         this.judgeSystem = system;
 
-        outputButton.setVisible(false);
         evaluateButton.setVisible(false);
     }
 
@@ -43,7 +42,6 @@ public class JudgePortal extends javax.swing.JFrame {
         zipFileLabel = new javax.swing.JLabel();
         browseButton = new javax.swing.JButton();
         evaluateButton = new javax.swing.JButton();
-        outputButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,13 +68,6 @@ public class JudgePortal extends javax.swing.JFrame {
             }
         });
 
-        outputButton.setText("Generate Results PDF");
-        outputButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                outputButtonActionPerformed(evt);
-            }
-        });
-
         submissionPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());  
 
         javax.swing.GroupLayout submissionPanelLayout = new javax.swing.GroupLayout(submissionPanel);
@@ -94,8 +85,7 @@ public class JudgePortal extends javax.swing.JFrame {
                         .addGroup(submissionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(browseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(evaluateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(35, 35, 35)
-                        .addComponent(outputButton)))
+                        .addGap(35, 35, 35)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, submissionPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -112,8 +102,7 @@ public class JudgePortal extends javax.swing.JFrame {
                     .addComponent(zipFileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(submissionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(browseButton)
-                    .addComponent(outputButton))
+                    .addComponent(browseButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(evaluateButton)
                 .addContainerGap(104, Short.MAX_VALUE))
@@ -169,25 +158,17 @@ public class JudgePortal extends javax.swing.JFrame {
     }
 
     private void evaluateButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        outputButton.setVisible(true);
+        
         
         String filePath = zipFileLabel.getText();
 
-        mainSubmissionLabel.setText("Evaluating the submission of the file");
+        mainSubmissionLabel.setText("Your Results have been generated!!");
 
         Command unzipFilesCommand = new CommandUnzipFiles (judgeSystem, filePath);
         invoker.setCommand(unzipFilesCommand);
         invoker.pressButton();
     }                                              
-
-    private void outputButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        Command producePDFCommand = new CommandProducePDF (judgeSystem);//, filePath);
-
-        mainSubmissionLabel.setText("Generating the results PDF...");
-
-        invoker.setCommand(producePDFCommand);
-        invoker.pressButton();
-    }                                            
+                               
 
     /**
      * @param args the command line arguments

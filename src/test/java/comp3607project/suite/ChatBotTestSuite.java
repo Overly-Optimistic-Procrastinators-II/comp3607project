@@ -25,6 +25,10 @@
 // //         }
 // //     }
 
+// // private String invokeGenerateChatBotLLM(int code) throws Exception {
+// //     return (String) ChatBotGenerator.getMethod("generateChatBotLLM", int.class).invoke(null, code);
+// // }
+
 
 //     @Test
 //     public void testChatBotConstructor() {

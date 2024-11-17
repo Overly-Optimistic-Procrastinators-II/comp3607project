@@ -27,6 +27,7 @@ public class JudgeSystem {
     
     private static String uploadPath;
     private ArrayList<TestResult> summary;
+    private int totalMark = 0;
 
     public JudgeSystem() {
         this.summary = new ArrayList<TestResult>();
@@ -64,7 +65,7 @@ public class JudgeSystem {
             System.out.println ("No valid directory was found!");
             return;
         } else {
-            PDFGenerator.generate(getUploadPath(), summary);
+            PDFGenerator.generate(getUploadPath(), summary, calculateMark());
         }
     }
 
@@ -105,5 +106,14 @@ public class JudgeSystem {
 
     public static void setUploadPath(String classPath) {
         uploadPath = classPath;
+    }
+
+    public int calculateMark()
+    {
+        for(TestResult s : summary)
+        {
+            totalMark += s.getMark();
+        }
+        return totalMark;
     }
 }

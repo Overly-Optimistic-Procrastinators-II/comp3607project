@@ -18,13 +18,14 @@ import java.util.ArrayList;
 public class PDFGenerator {
     private static Font defaultFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK);
 
-    public static void generate(String filePath, ArrayList<TestResult> summary) {
+    public static void generate(String filePath, ArrayList<TestResult> summary, int totalMark) {
         try {
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(new File(filePath, "results.pdf")));
             document.open();
             addMetaData(document);
             addContent(document, summary);
+            document.add(new Paragraph("Total Mark: " + totalMark));
             document.close();
         } catch (Exception e) {
             e.printStackTrace();
