@@ -23,21 +23,21 @@ public class PDFGenerator {
     private static Font headerFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 14, Font.BOLD, BaseColor.BLACK);
     private static Font cellFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK);
     
-    public static void generate(String filePath, ArrayList<TestResult> summary) {
+    public static void generate(String filePath, ArrayList<TestResult> summary, String folderName) {
         try {
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(new File(filePath, "results.pdf")));
             document.open();
             addMetaData(document);
-            addContent(document, summary);
+            addContent(document, summary, folderName);
             document.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void addContent(Document document, ArrayList<TestResult> summary) throws DocumentException {
-        document.add(new Paragraph(("Grade: " + JudgeSystem.getGrade() + "/100"), defaultFont));
+    private static void addContent(Document document, ArrayList<TestResult> summary, String folderName) throws DocumentException {
+        document.add(new Paragraph(("Student ID: "+ folderName + "\nGrade: " + JudgeSystem.getGrade() + "/100"), defaultFont));
         document.add(new Paragraph(" "));
         
         PdfPTable table = new PdfPTable(3); 

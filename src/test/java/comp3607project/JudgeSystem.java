@@ -17,9 +17,11 @@ import comp3607project.suite.ChatBotPlatformTestSuite;
 import comp3607project.suite.ChatBotSimulationTestSuite;
 import comp3607project.suite.ChatBotTestSuite;
 import comp3607project.tool.DynamicJavaCompiler;
+import comp3607project.tool.ExtractFolderName;
 import comp3607project.tool.PDFGenerator;
 import comp3607project.tool.TestRunner;
 import comp3607project.tool.ZipFileHandler;
+import comp3607project.tool.ExtractFolderName;
 
 import java.util.ArrayList;
 
@@ -29,13 +31,18 @@ public class JudgeSystem {
     private static int grade;
     private static boolean isCompiled;
     private static URLClassLoader classLoader;
-
+    private String folderName;
     public JudgeSystem() {
         this.summary = new ArrayList<TestResult>();
     }
 
     public void evaluateSubmission (String filePath) {
         System.out.println ("Evaluating the submission of this file: " + filePath);
+
+
+        System.out.println("FilePath is: " + filePath + "\n");
+        folderName = "";
+        folderName = ExtractFolderName.getFolderName(filePath);
 
         summary.clear();
         grade = 0;
@@ -71,7 +78,7 @@ public class JudgeSystem {
                 return;
             } else {
                 calculateMark();
-                PDFGenerator.generate(getUploadPath(), summary);
+                PDFGenerator.generate(getUploadPath(), summary, folderName);
             }
         } catch (Exception e) {
             System.err.println("Could not create PDF");
@@ -154,4 +161,5 @@ public class JudgeSystem {
     public static int getGrade() {
         return grade;
     }
+
 }
