@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import comp3607project.file.FileIterator;
 import comp3607project.file.FileManager;
@@ -24,6 +26,10 @@ import comp3607project.tool.ZipFileHandler;
 import comp3607project.tool.ExtractFolderName;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 public class JudgeSystem {   
     private static String uploadPath;
@@ -85,24 +91,103 @@ public class JudgeSystem {
         }
     }
 
-    public void unzipFiles(String filePath) {
-        System.out.println("Unzipping the files from this file: " + filePath);
+    public void unzipSubmissions(String filePath) {
+        System.out.println("Unzipping submissions.zip and its nested zipped folders from: " + filePath);
 
-        File directory = new File("uploads");
-
-        if (!directory.exists()) {
-            directory.mkdir();
+        File rootDirectory = new File("uploads");
+        if (!rootDirectory.exists()) {
+            rootDirectory.mkdir();
         }
 
-        setUploadPath(ZipFileHandler.unzip(filePath, directory));
-        processUploads(directory);
+        // Unzip the top-level submissions.zip
+        File topLevelDir = new File(rootDirectory, "submissions");
+        if (!topLevelDir.exists()) {
+            topLevelDir.mkdir();
+        }
+
+        unzipFiles(new File(filePath), topLevelDir);
+
+        // Process nested zipped folders
+        extractNestedZips(topLevelDir);
+        processUploads(rootDirectory);
     }
 
+
+    private static void unzipFiles(File zipFile, File destinationDir) 
+    {
+        try (ZipFile zip = new ZipFile(zipFile)) {
+            Enumeration<? extends ZipEntry> entries = zip.entries();
+            while (entries.hasMoreElements()) {
+                ZipEntry entry = entries.nextElement();
+
+                if (entry.getName().endsWith(".ctxt")) {
+                    System.out.println("Skipping .ctxt file: " + entry.getName());
+                    continue;
+                }
+
+                File entryDestination = new File(destinationDir, entry.getName());
+                if (entry.isDirectory()) {
+                    entryDestination.mkdirs();
+                } else {
+                    entryDestination.getParentFile().mkdirs();
+                    Files.copy(zip.getInputStream(entry), entryDestination.toPath());
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error unzipping file: " + zipFile.getName() + " - " + e.getMessage());
+        }
+        
+    }
+
+    private void extractNestedZips(File directory) {
+        File[] files = directory.listFiles();
+        if (files == null) return;
+
+        for (File file : files) {
+            if (file.isDirectory()) {
+                // Recursively process subdirectories
+                extractNestedZips(file);
+            } else if (file.getName().endsWith(".zip")) {
+                // Unzip nested zipped folder
+                File nestedDir = new File(file.getParentFile(), file.getName().replace(".zip", ""));
+                nestedDir.mkdir();
+                unzipFiles(file, nestedDir);
+                file.delete(); // Optionally remove the nested zip after extraction
+            }
+        }
+    }
+
+
+
+    // public void unzipFiles(String filePath) {
+    //     System.out.println("Unzipping the files from this file: " + filePath);
+
+
+    //     File directory = new File("uploads");
+    //     if (!directory.exists()) {
+    //         directory.mkdir();
+    //     }
+
+    //     setUploadPath(ZipFileHandler.unzip(filePath, directory));
+    //     processUploads(directory);
+    // }
+
+    // private void processUploads(File directory) {
+    //     FileManager fileManager = new FileManager(new File("uploads"));
+    //     FileIterator iterator = fileManager.createFileParser();
+
+    //     while  (iterator.hasNext()) {
+    //         FileType file = iterator.next();
+    //         setUploadPath(file.getAbsolutePath());
+    //         evaluateSubmission(getUploadPath());
+    //     }
+    // }
+
     private void processUploads(File directory) {
-        FileManager fileManager = new FileManager(new File("uploads"));
+        FileManager fileManager = new FileManager(directory);
         FileIterator iterator = fileManager.createFileParser();
 
-        while  (iterator.hasNext()) {
+        while (iterator.hasNext()) {
             FileType file = iterator.next();
             setUploadPath(file.getAbsolutePath());
             evaluateSubmission(getUploadPath());

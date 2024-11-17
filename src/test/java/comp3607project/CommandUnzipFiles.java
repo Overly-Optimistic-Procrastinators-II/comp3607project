@@ -10,6 +10,6 @@ public class CommandUnzipFiles implements Command {
     }
 
     public void execute() {
-        judgeSystem.unzipFiles(filePath);
+        judgeSystem.unzipSubmissions(filePath);
     }
 }
