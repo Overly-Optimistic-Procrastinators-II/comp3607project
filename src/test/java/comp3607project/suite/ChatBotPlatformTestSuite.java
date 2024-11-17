@@ -1,54 +1,76 @@
-// package comp3607project.suite;
+package comp3607project.suite;
 
-// import static org.junit.jupiter.api.Assertions.*;
-// import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-// import comp3607project.tool.ClassHolder;
+import org.junit.Before;
+import org.junit.jupiter.api.Test;
 
-// import java.util.ArrayList;
-// // import org.junit.BeforeClass;
+import comp3607project.JudgeSystem;
+import comp3607project.tool.ClassHolder;
 
-// public class ChatBotPlatformTestSuite {
+import java.util.ArrayList;
+// import org.junit.BeforeClass;
 
-//     private final ChatBotPlatform testPlatform = new ChatBotPlatform();
+public class ChatBotPlatformTestSuite {
+
+    // private final ChatBotPlatform testPlatform = new ChatBotPlatform();
+    private Class<?> ChatBotPlatform;
     
-//     public ChatBotPlatformTestSuite() {}
+    public ChatBotPlatformTestSuite() {}
 
-//     @Test
-//     public void testChatBotPlatformConstructor() {
-//         // 2 marks
-//         assertNotNull(new ChatBotPlatform());
-//         assertTrue((new ChatBotPlatform()) instanceof ChatBotPlatform);
-//         assertEquals(new ArrayList<ChatBot>(), testPlatform.getBots());
-//     }
+    @Before
+    public void setup() {
+        @SuppressWarnings("unused")
+        ClassHolder holder = new ClassHolder(JudgeSystem.getUploadPath());
+        ChatBotPlatform = ClassHolder.getChatBotPlatform();
+    }
+    
+    // @Test
+    // public void testChatBotPlatformConstructor() {
+    //     // 2 marks
+    //     assertNotNull("ChatGPT-3.5", invoke);
+    //     assertTrue((new ChatBotPlatform()) instanceof ChatBotPlatform);
+    //     assertEquals(new ArrayList<ChatBot>(), testPlatform.getBots());
+    // }
+
+    @Test
+    public void testAddChatBot() throws Exception {
+        // 5 marks
+        Boolean result = invokeChatBotPlatformAddChatBot(0);
+        assertNotNull(result,"Method must return a non null value");
+        assertTrue(result == true || result == false,"Method returned non boolean value");
+        // assertTrue(testPlatform.getChatBotList().contains("ChatBot Name: ChatGPT-3.5"),"Incorrect Bot Created");
+    }
+
+    @Test
+    public void testGetChatBotList() throws Exception{
+        // 8 marks
+
+        String response = invokeChatBotPlatformGetChatBotList();
+        assertNotNull(response,"Method must return a non null value");
+        assertTrue(response instanceof String,"Method returned non String value");
+        assertTrue(response.contains("ChartBot Name: ChatGPT-3.5"),"Incorrect Bot Created");
+    }
 
 
-//     @Test
-//     public void testAddChatBot() {
-//         // 5 marks
-//         Boolean result = testPlatform.addChatBot(0);
-//         assertNotNull(result,"Method must return a non null value");
-//         assertTrue(result == true || result == false,"Method returned non boolean value");
-//         assertTrue(testPlatform.getChatBotList().contains("ChatBot Name: ChatGPT-3.5"),"Incorrect Bot Created");
-//     }
+    @Test
+    public void testInteractWithBot() throws Exception{
+        // 5 marks
+        String response = invokeChatBotPlatformInteractWithBot(0, "Hello World");
+        assertNotNull(response,"Method must return a non null value");
+        assertTrue(response.contains("Incorrect Bot Number")||response.contains("Daily Limit Reached. Wait 24 hours to resume chatbot usage")||(response.contains("(Message#") && response.contains(")") && response.contains("Response from") && response.contains(">>")), "Method must adhere to the output format provided");
+    }
 
+    private Boolean invokeChatBotPlatformAddChatBot(int LLMcode) throws Exception {
+        return (Boolean) ChatBotPlatform.getMethod("addChatBot", int.class).invoke(null, LLMcode);
+    }
 
-//     @Test
-//     public void testGetChatBotList() {
-//         // 8 marks
-//         String response = testPlatform.getChatBotList();
-//         assertNotNull(response,"Method must return a non null value");
-//         assertTrue(response instanceof String,"Method returned non String value");
-//         assertTrue(response.contains("ChartBot Name: ChatGPT-3.5"),"Incorrect Bot Created");
-//     }
+    private String invokeChatBotPlatformGetChatBotList() throws Exception {
+        return (String) ChatBotPlatform.getMethod("getChatBotList").invoke(null);
+    }
 
+    private String invokeChatBotPlatformInteractWithBot(int LLMcode, String message) throws Exception {
+        return (String) ChatBotPlatform.getMethod("interactWithBot", int.class).invoke(null, LLMcode, message);
+    }
 
-//     @Test
-//     public void testInteractWithBot(){
-//         // 5 marks
-//         String response = testPlatform.interactWithBot(0, "Hello World");
-//         assertNotNull(response,"Method must return a non null value");
-//         assertTrue(response.contains("Incorrect Bot Number")||response.contains("Daily Limit Reached. Wait 24 hours to resume chatbot usage")||(response.contains("(Message#") && response.contains(")") && response.contains("Response from") && response.contains(">>")), "Method must adhere to the output format provided");
-//     }
-
-// }
+}
