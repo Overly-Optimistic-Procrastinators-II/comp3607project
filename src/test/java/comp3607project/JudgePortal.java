@@ -212,7 +212,6 @@ public class JudgePortal extends javax.swing.JFrame {
     private javax.swing.JButton evaluateButton;
     private javax.swing.JLabel mainLabel;
     private javax.swing.JLabel mainSubmissionLabel;
-    private javax.swing.JButton outputButton;
     private javax.swing.JPanel submissionPanel;
     private javax.swing.JLabel uploadSubmissionLabel;
     private javax.swing.JLabel zipFileLabel;
