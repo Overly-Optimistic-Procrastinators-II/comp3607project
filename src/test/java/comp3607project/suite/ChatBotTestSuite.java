@@ -1,148 +1,224 @@
-// package comp3607project.suite;
+package comp3607project.suite;
 
-// import static org.junit.jupiter.api.Assertions.assertEquals;
-// import static org.junit.jupiter.api.Assertions.assertFalse;
-// import static org.junit.jupiter.api.Assertions.assertNotNull;
-// import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+// import java.lang.reflect.Constructor;
+
+import org.junit.Before;
 // import org.junit.jupiter.api.BeforeEach;
-// import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Test;
 
-// // import comp3607project.tool.ClassHolder;
+import comp3607project.JudgeSystem;
+import comp3607project.tool.ClassHolder;
 
-// public class ChatBotTestSuite {
-//     private static ChatBot tester;
-//     private static ChatBot customTester;
+public class ChatBotTestSuite {
+    // private static Object tester;
+    // private static Object customTester;
+    private Class<?> ChatBot;
 
-// //     @BeforeEach
-// //     public void initialize() {
-// //         // Initialize the Chatbot objects
-// //         try {
-// //             tester = new ChatBot();
-// //             customTester = new ChatBot(1);
-// //         } catch (Exception e) {
-// //             e.printStackTrace();
-// //             throw new RuntimeException("Failed to initialize ChatBot objects", e);
-// //         }
-// //     }
+    @Before
+    public void setup() {
+        @SuppressWarnings("unused")
+        ClassHolder holder = new ClassHolder(JudgeSystem.getUploadPath());
+        ChatBot = ClassHolder.getChatBot();
+    }
 
-// // private String invokeGenerateChatBotLLM(int code) throws Exception {
-// //     return (String) ChatBotGenerator.getMethod("generateChatBotLLM", int.class).invoke(null, code);
-// // }
-
-
-//     @Test
-//     public void testChatBotConstructor() {
-//         // 3 marks
-//         ChatBot botT = new ChatBot();
-//         assertEquals("ChatGPT-3.5", botT.getChatBotName());
-//     }
+    // @BeforeEach
+    // public void initialize() {
+    //     try {
+    //         Constructor<?> testConstructor = ChatBot.getConstructor();
+    //         Constructor<?> customConstructor = ChatBot.getConstructor(int.class);
+    //         tester = testConstructor.newInstance();
+    //         customTester = customConstructor.newInstance(1);
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         throw new RuntimeException("Failed to initialize ChatBot objects", e);
+    //     }
+    // }
 
 
-//     @Test
-//     public void testChatBotOverloadedConstructor() {
-//         // 3 marks
-//         ChatBot botT = new ChatBot(1);
-//         assertEquals("LLaMa", botT.getChatBotName());
-//     }
+    @Test
+    @TestMetaData(
+        description = "Test ChatBot Constructor", 
+        marks = "3"
+    )
+    public void testChatBotConstructor() throws Exception {
+        assertEquals("ChatGPT-3.5", invokeGetChatBotName());
+    }
 
 
-//     @Test
-//     public void testGetChatBotName() {
-//         // 2 mark
-//         //Tests the return value of the accessor is a string and is not null
-//         assertNotNull(tester.getChatBotName(), "Method must return a non-null variable");
-//         assertTrue(tester.getChatBotName() instanceof String, "Method should return a String type variable");
-//     }
+    @Test
+    @TestMetaData(
+        description = "Test ChatBot Overloaded Constructor", 
+        marks = "3"
+    )
+    public void testChatBotOverloadedConstructor() throws Exception {
+        assertEquals("LLaMa", invokeGetChatBotName());
+    }
 
 
-//     @Test
-//     public void testMessageLimit() {
-//         // 3 marks
-//         //Tests the return value of the accessor is an integer, is not null and is equal to 10 (Message limit)
-//         assertNotNull(tester.getMessageLimit(), "Method must return a non-null variable");
-//         assertTrue(tester.getMessageLimit() >= 0, "Method should return an Integer type variable");
-//         assertEquals(tester.getMessageLimit(), 10, "Message limit should be 10");
-//     }
+    @Test
+    @TestMetaData(
+        description = "Test GetChatBotName", 
+        marks = "2"
+    )
+    public void testGetChatBotName() throws Exception {
+        assertNotNull(invokeGetChatBotName(), "Method must return a non-null variable");
+        assertTrue(invokeGetChatBotName() instanceof String, "Method should return a String type variable");
+    }
 
 
-//     @Test
-//     public void testGetNumResponsesGenerated() {
-//         // 2 mark
-//         //Tests the return value of the accessor is an integer and is not null
-//         tester.prompt("Hello World!");
-//         assertNotNull(tester.getNumResponsesGenerated(), "Method must return a non-null variable");
-//         assertTrue(tester.getNumResponsesGenerated() >= 0, "Method should return an Integer type variable");
-//         assertEquals(1, tester.getNumResponsesGenerated(), "Number of generated responses being returned is not correct");
-//     }
+    @Test
+    @TestMetaData(
+        description = "TestMessageLimit", 
+        marks = "3"
+    )
+    public void testMessageLimit() throws Exception {
+        assertNotNull(invokeGetMessageLimit(), "Method must return a non-null variable");
+        assertTrue(invokeGetMessageLimit() >= 0, "Method should return an Integer type variable");
+        assertEquals(invokeGetMessageLimit(), 10, "Message limit should be 10");
+    }
 
 
-//     @Test
-//     public void testGetTotalNumResponsesGenerated() {
-//         // 4 marks
-//         //Tests the return value of the accessor is an integer and is not null
-//         customTester.prompt("Hello World!");
-//         tester.prompt("Hello World!");
-//         assertNotNull(ChatBot.getTotalNumResponsesGenerated(), "Method must return a non-null variable");
-//         assertTrue(ChatBot.getTotalNumResponsesGenerated() >= 0, "Method should return an Integer type variable");
-//         assertEquals(2, ChatBot.getTotalNumResponsesGenerated(), "Method is returning incorrect total number of responses generated");
-//     }
+    @Test
+    @TestMetaData(
+        description = "Test GetNumResponsesGenerated", 
+        marks = "2"
+    )
+    public void testGetNumResponsesGenerated() throws Exception {
+        invokePrompt("Hello World!");
+        assertNotNull(invokeGetNumResponsesGenerated(), "Method must return a non-null variable");
+        assertTrue(invokeGetNumResponsesGenerated() >= 0, "Method should return an Integer type variable");
+        assertEquals(1, invokeGetNumResponsesGenerated(), "Number of generated responses being returned is not correct");
+    }
 
 
-//     @Test
-//     public void testGetTotalNumMessagesRemaining() {
-//         // 3 marks
-//         // TODO: Implement test for get total number of messages remaining
-//         assertTrue(true);
-//     }
+    @Test
+    @TestMetaData(
+        description = "Test GetTotalNumResponsesGenerated", 
+        marks = "4"
+    )
+    public void testGetTotalNumResponsesGenerated() throws Exception {
+        invokePrompt("Hello World!");
+        invokePrompt("Hello World!");
+        assertNotNull(invokeGetTotalNumResponsesGenerated(), "Method must return a non-null variable");
+        assertTrue(invokeGetTotalNumResponsesGenerated() >= 0, "Method should return an Integer type variable");
+        assertEquals(2, invokeGetTotalNumResponsesGenerated(), "Method is returning incorrect total number of responses generated");
+    }
+
+
+    @Test
+    @TestMetaData(
+        description = "Test GetTotalNumMessagesRemaining", 
+        marks = "3"
+    )
+    public void testGetTotalNumMessagesRemaining() throws Exception {
+        assertNotNull(invokeGetTotalNumMessagesRemaining(), "Method must return a non-null variable");
+        assertTrue(invokeGetTotalNumMessagesRemaining() >= 0, "Method should return an Integer type variable");
+        assertEquals(8, invokeGetTotalNumMessagesRemaining(), "Number of generated responses being returned is not correct");
+    }
 
     
-//     @Test
-//     public void testLimitReachedFalse(){
-//         // 1 mark
-//         assertNotNull(ChatBot.limitReached(), "Method must return a non-null variable");
-//         assertTrue(ChatBot.limitReached() == true || ChatBot.limitReached() == false, "Method should return a Boolean type variable");
-//         assertFalse(ChatBot.limitReached(), "Method is incorrectly returning true (Stating that limit has been reached)");
-//     }
+    @Test
+    @TestMetaData(
+        description = "Test LimitReached Case False", 
+        marks = "1"
+    )
+    public void testLimitReachedFalse() throws Exception {
+        assertNotNull(invokeLimitReached(), "Method must return a non-null variable");
+        assertTrue(invokeLimitReached() == true || invokeLimitReached() == false, "Method should return a Boolean type variable");
+        assertFalse(invokeLimitReached(), "Method is incorrectly returning true (Stating that limit has been reached)");
+    }
 
 
-//     @Test
-//     public void testLimitReachedTrue(){
-//         // 2 marks
-//         for(int i = 0; i < 5; i++){
-//             customTester.prompt("Hello World");
-//             tester.prompt("Hello World");
-//         }
-//         assertNotNull(ChatBot.limitReached(), "Method must return a non-null variable");
-//         assertTrue(ChatBot.limitReached() == true || ChatBot.limitReached() == false, "Method should return a Boolean type variable");
-//         assertTrue(ChatBot.limitReached(), "Method is incorrectly returning false (Stating that limit has not been reached)");
-//     }
+    @Test
+    @TestMetaData(
+        description = "Test LimitReached Case True", 
+        marks = "2"
+    )
+    public void testLimitReachedTrue() throws Exception {
+        for(int i = 0; i < 10; i++){
+            invokePrompt("Hello World!");
+        }
+        assertNotNull(invokeLimitReached(), "Method must return a non-null variable");
+        assertTrue(invokeLimitReached() == true || invokeLimitReached() == false, "Method should return a Boolean type variable");
+        assertTrue(invokeLimitReached(), "Method is incorrectly returning false (Stating that limit has not been reached)");
+    }
 
 
-//     @Test
-//     public void testGenerateResponse(){
-//         // 5 marks
-//         String response = tester.prompt("Hello World");
-//         assertNotNull(response, "Method must return a non-null variable");
-//         assertTrue(response instanceof String, "Method should return a String type variable");
-//         assertTrue(response.contains("(Message#") && response.contains(")") && response.contains("Response from") && response.contains(">>"), "Method must adhere to the output format provided");
-//     }
+    @Test
+    @TestMetaData(
+        description = "Test GenerateResponse", 
+        marks = "5"
+    )
+    public void testGenerateResponse() throws Exception {
+        String response = invokePrompt("Hello World");
+        assertNotNull(response, "Method must return a non-null variable");
+        assertTrue(response instanceof String, "Method should return a String type variable");
+        assertTrue(response.contains("(Message#") && response.contains(")") && response.contains("Response from") && response.contains(">>"), "Method must adhere to the output format provided");
+    }
 
 
-//     @Test
-//     public void testPromptResponse() {
-//         // 4 marks
-//         for (int i = 0; i < 10; i++)
-//             tester.prompt("Hello World");
-//         String response = tester.prompt("Are you there?");
+    @Test
+    @TestMetaData(
+        description = "Test PromptResponse", 
+        marks = "4"
+    )
+    public void testPromptResponse() throws Exception {
+        for (int i = 0; i < 10; i++)
+            invokePrompt("Hello World");
+        String response = invokePrompt("Are you there?");
         
-//         assertEquals("Daily Limit Reached. Wait 24 hours to resume chatbot usage", response, "Response should indicate limit reached after exceeding message limit");
-//     }
+        assertEquals("Daily Limit Reached. Wait 24 hours to resume chatbot usage", response, "Response should indicate limit reached after exceeding message limit");
+    }
 
 
-//     @Test
-//     public void testToString() {
-//         // 4 marks
-//         // TODO: Implement test for toString()
+    @Test
+    @TestMetaData(
+        description = "Test ToString", 
+        marks = "4"
+    )
+    public void testToString() throws Exception {
+        assertTrue(invokeToString() instanceof String, "Method should return a String type variable");
+    }
 
-//     }
-// }
+
+    // private void invokeChatBot() throws Exception {
+    //     return (Object) ChatBot.get
+    // }
+
+    private String invokeGetChatBotName() throws Exception {
+        return (String) ChatBot.getMethod("getChatBotName").invoke(null);
+    }
+
+    private int invokeGetMessageLimit() throws Exception {
+        return (int) ChatBot.getMethod("getMessageLimit").invoke(null);
+    }
+
+    private int invokeGetNumResponsesGenerated() throws Exception {
+        return (int) ChatBot.getMethod("getNumResponsesGenerated").invoke(null);
+    }
+
+    private int invokeGetTotalNumResponsesGenerated() throws Exception {
+        return (int) ChatBot.getMethod("getTotalNumResponsesGenerated").invoke(null);
+    }
+
+    private int invokeGetTotalNumMessagesRemaining() throws Exception {
+        return (int) ChatBot.getMethod("getTotalNumMessagesRemaining").invoke(null);
+    }
+
+    private boolean invokeLimitReached() throws Exception {
+        return (boolean) ChatBot.getMethod("limitReached").invoke(null);
+    }
+
+    private String invokePrompt(String message) throws Exception {
+        return (String) ChatBot.getMethod("prompt", String.class).invoke(null, message);
+    }
+
+    private String invokeToString() throws Exception {
+        return (String) ChatBot.getMethod("toString", String.class).invoke(null);
+    }
+}
