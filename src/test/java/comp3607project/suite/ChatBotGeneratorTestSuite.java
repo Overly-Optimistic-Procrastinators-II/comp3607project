@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
-import comp3607project.tool.ClassHolder;
 import comp3607project.JudgeSystem;
+import comp3607project.tool.ClassHolder;
 
 public class ChatBotGeneratorTestSuite {
     private Class<?> ChatBotGenerator;
@@ -16,7 +16,6 @@ public class ChatBotGeneratorTestSuite {
 
     @Before
     public void setup() {
-        @SuppressWarnings("unused")
         ClassHolder holder = new ClassHolder(JudgeSystem.getUploadPath());
         ChatBotGenerator = ClassHolder.getChatBotGenerator();
     }

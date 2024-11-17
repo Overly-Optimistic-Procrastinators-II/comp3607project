@@ -18,7 +18,6 @@ public class ChatBotPlatformTestSuite {
 
     @Before
     public void setup() {
-        @SuppressWarnings("unused")
         ClassHolder holder = new ClassHolder(JudgeSystem.getUploadPath());
         ChatBotPlatform = ClassHolder.getChatBotPlatform();
     }

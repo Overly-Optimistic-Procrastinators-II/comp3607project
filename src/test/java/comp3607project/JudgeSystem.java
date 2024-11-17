@@ -12,10 +12,9 @@ import comp3607project.file.FileIterator;
 import comp3607project.file.FileManager;
 import comp3607project.file.FileType;
 import comp3607project.suite.ChatBotGeneratorTestSuite;
-// import comp3607project.suite.ChatBotPlatformTestSuite;
-// import comp3607project.suite.ChatBotSimulationTestSuite;
-// import comp3607project.suite.ChatBotTestSuite;
-// import comp3607project.tool.ClassHolder;
+import comp3607project.suite.ChatBotPlatformTestSuite;
+import comp3607project.suite.ChatBotSimulationTestSuite;
+import comp3607project.suite.ChatBotTestSuite;
 import comp3607project.tool.DynamicJavaCompiler;
 import comp3607project.tool.PDFGenerator;
 import comp3607project.tool.TestRunner;
@@ -37,19 +36,18 @@ public class JudgeSystem {
         System.out.println ("Evaluating the submission of this file: " + filePath);
 
         summary.clear();
+        totalMark = 0;
+
         try {
             DynamicJavaCompiler.compile(filePath);
-
             TestRunner runner = new TestRunner();
 
-            // summary = runner.run(
-            //     ChatBotGeneratorTestSuite.class, 
-            //     ChatBotTestSuite.class, 
-            //     ChatBotPlatformTestSuite.class, 
-            //     ChatBotSimulationTestSuite.class
-            // );
-
-            summary = runner.run(ChatBotGeneratorTestSuite.class);
+            summary = runner.run(
+                ChatBotGeneratorTestSuite.class, 
+                ChatBotTestSuite.class, 
+                ChatBotPlatformTestSuite.class, 
+                ChatBotSimulationTestSuite.class
+            );
 
             generateResults();
         } catch (Exception e) {
@@ -91,13 +89,6 @@ public class JudgeSystem {
             setUploadPath(file.getAbsolutePath());
             evaluateSubmission(getUploadPath());
         }
-        // FileManager fileManager = new FileManager(directory);
-        // FileIterator iterator = fileManager.createFileParser();
-
-        // while(iterator.hasNext()) {
-        //     FileType file = iterator.next();
-        //     evaluateSubmission(file.getAbsolutePath());
-        // }
     }
 
     public static String getUploadPath() {
@@ -108,12 +99,11 @@ public class JudgeSystem {
         uploadPath = classPath;
     }
 
-    public int calculateMark()
-    {
-        for(TestResult s : summary)
-        {
+    public int calculateMark() {
+        for(TestResult s : summary) {
             totalMark += s.getMark();
         }
+        
         return totalMark;
     }
 }

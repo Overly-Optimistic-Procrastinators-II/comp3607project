@@ -10,9 +10,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
+import comp3607project.JudgeSystem;
 import comp3607project.tool.ClassHolder;
 
-class ChatBotSimulationTestSuite {
+public class ChatBotSimulationTestSuite {
     private Class<?> ChatBotSimulation;
 
     public ChatBotSimulationTestSuite() {}
@@ -23,6 +24,7 @@ class ChatBotSimulationTestSuite {
 
     @Before
     void setUp() throws Exception{
+        ClassHolder holder = new ClassHolder(JudgeSystem.getUploadPath());
         ChatBotSimulation = ClassHolder.getChatBotSimulation();
         System.setOut(new PrintStream(outputStreamCaptor));
         invokeMain();
@@ -107,7 +109,6 @@ class ChatBotSimulationTestSuite {
         assertTrue(output.indexOf("Your ChatBots")<output.lastIndexOf("Your ChatBots"));
     }
 
-    
     private void invokeMain() throws Exception {
         ChatBotSimulation.getMethod("main", String[].class).invoke(null, (Object) new String[]{});
     }
