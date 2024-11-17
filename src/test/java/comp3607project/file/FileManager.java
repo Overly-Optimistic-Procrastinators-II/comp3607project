@@ -24,7 +24,6 @@ public class FileManager implements FileContainer {
             if (fileList != null) {
                 for (File file : fileList) {
                     if (file.isFile() && getExtension(file.getName())) {
-                        files.add(new FileType(file));
                         hasJavaFiles = true;
                     }
                     else if (file.isDirectory()) {

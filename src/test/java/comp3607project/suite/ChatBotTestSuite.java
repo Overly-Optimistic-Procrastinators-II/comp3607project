@@ -1,4 +1,4 @@
-// // package comp3607project.suite;
+// package comp3607project.suite;
 
 // import static org.junit.jupiter.api.Assertions.assertEquals;
 // import static org.junit.jupiter.api.Assertions.assertFalse;
