@@ -29,30 +29,20 @@ public class TestRunner {
 
     private void addFailures(Result result) {
         for (Failure failure : result.getFailures()) {
-            summary.add(new TestResult(failure.getDescription().getMethodName(), 
-                                           failure.getDescription().getDisplayName(), 
-                                           "FAIL", 
-                                           failure.getMessage(), 
-                                           0));
+            TestMetaData metadata = failure.getDescription().getAnnotation(TestMetaData.class);
+
+            if (!isIgnored(getMetaDataDescription(metadata), getMetaDataMark(metadata))) {
+                summary.add(new TestResult(failure.getDescription().getMethodName(), getMetaDataDescription(metadata), "FAIL", failure.getMessage(), 0));
+            }
         }
     }
 
     private void addPasses(Class<?> testClass) {
         for (Method method : testClass.getMethods()) {
-            
             TestMetaData metadata = method.getAnnotation(TestMetaData.class);
-            String description = (metadata != null) ? metadata.description() : "No description available";
-            int mark = ((metadata != null) ? Integer.parseInt(metadata.marks()) : -1);
 
-            if (!isFailure(method) && !isIgnored(description, mark)) {
-                summary.add(
-                    new TestResult(
-                        method.getName(), 
-                        description, 
-                        "PASS", 
-                        mark
-                    )
-                );
+            if (!isFailure(method) && !isIgnored(getMetaDataDescription(metadata), getMetaDataMark(metadata))) {
+                summary.add(new TestResult(method.getName(), getMetaDataDescription(metadata), "PASS", getMetaDataMark(metadata)));
             }
         }
     }
@@ -68,7 +58,15 @@ public class TestRunner {
     }
 
     private boolean isIgnored(String description, int mark) {
-        return ((description.equals("No description available") || mark == -1) ? true : false);
+        return ((description.equals("skip") || mark == -1) ? true : false);
+    }
+
+    private String getMetaDataDescription(TestMetaData metadata) {
+        return (metadata != null) ? metadata.description() : "skip";
+    }
+
+    private int getMetaDataMark(TestMetaData metadata) {
+        return (metadata != null) ? Integer.parseInt(metadata.marks()) : -1;
     }
 }
 

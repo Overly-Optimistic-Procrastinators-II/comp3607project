@@ -24,7 +24,6 @@ public class ChatBotGeneratorTestSuite {
 
     
     @Test
-    @DisplayName("Test GenerateChatBotLLM returns ChatGPT-3.5 Lower Bound")
     @TestMetaData(
         description = "Test GenerateChatBotLLM returns ChatGPT-3.5 Lower Bound", 
         marks = "1"
@@ -35,7 +34,6 @@ public class ChatBotGeneratorTestSuite {
 
 
     @Test
-    @DisplayName("Test GenerateChatBotLLM returns ChatGPT-3.5 Upper Bound")
     @TestMetaData(
         description = "Test GenerateChatBotLLM returns ChatGPT-3.5 Upper Bound", 
         marks = "1"
@@ -46,7 +44,6 @@ public class ChatBotGeneratorTestSuite {
 
 
     @Test
-    @DisplayName("Test GenerateChatBotLLM returns LLama")
     @TestMetaData(
         description = "Test GenerateChatBotLLM returns LLama", 
         marks = "1"
@@ -57,7 +54,6 @@ public class ChatBotGeneratorTestSuite {
 
 
     @Test
-    @DisplayName("Test GenerateChatBotLLM returns Mistral7B")
     @TestMetaData(
         description = "Test GenerateChatBotLLM returns Mistral7B", 
         marks = "1"
@@ -68,7 +64,6 @@ public class ChatBotGeneratorTestSuite {
 
 
     @Test
-    @DisplayName("Test GenerateChatBotLLM returns Bard")
     @TestMetaData(
         description = "Test GenerateChatBotLLM returns Bard", 
         marks = "1"
@@ -79,7 +74,6 @@ public class ChatBotGeneratorTestSuite {
 
 
     @Test
-    @DisplayName("Test GenerateChatBotLLM returns Claude")
     @TestMetaData(
         description = "Test GenerateChatBotLLM returns Claude", 
         marks = "1"
@@ -90,7 +84,6 @@ public class ChatBotGeneratorTestSuite {
 
 
     @Test
-    @DisplayName("Test GenerateChatBotLLM returns Solar")
     @TestMetaData(
         description = "Test GenerateChatBotLLM returns Solar", 
         marks = "1"

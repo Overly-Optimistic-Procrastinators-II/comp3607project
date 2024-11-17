@@ -64,7 +64,7 @@ public class TestResult {
     }
 
     public String toString() {
-        return (this.getStatus() + " " + this.getDescription() + " " + this.getMark() + " " +
-                this.getComment() + "\n");
+        return ("[" + this.getStatus() + "] [" + this.getMark() + " mark] " + 
+                this.getDescription() + " " + this.getComment() + "\n");
     }
 }
