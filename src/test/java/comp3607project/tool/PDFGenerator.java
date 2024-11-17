@@ -24,15 +24,14 @@ public class PDFGenerator {
             PdfWriter.getInstance(document, new FileOutputStream(new File(filePath, "results.pdf")));
             document.open();
             addMetaData(document);
-            addContent(document, summary);
-            document.add(new Paragraph("Total Mark: " + totalMark));
+            addContent(document, summary, totalMark);
             document.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void addContent(Document document, ArrayList<TestResult> summary) throws DocumentException {
+    private static void addContent(Document document, ArrayList<TestResult> summary, int totalMark) throws DocumentException {
         if (summary.isEmpty()) {
             document.add(new Paragraph("This submission has invalid files", defaultFont));
         }
@@ -41,6 +40,8 @@ public class PDFGenerator {
                 document.add(new Paragraph(result.toString(), defaultFont));
             }
         }
+
+        document.add(new Paragraph(("Total Mark: " + totalMark), defaultFont));
     }
 
     private static void addMetaData(Document document) {
