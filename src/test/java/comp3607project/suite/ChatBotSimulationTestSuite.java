@@ -3,36 +3,34 @@ package comp3607project.suite;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
-// import comp3607project.tool.ClassHolder;
+import comp3607project.tool.ClassHolder;
 
 class ChatBotSimulationTestSuite {
-    
-    public ChatBotSimulationTestSuite() {}
-
     private Class<?> ChatBotSimulation;
+
+    public ChatBotSimulationTestSuite() {}
     
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
     private final PrintStream standardOut = System.out;
     protected String output;
 
-    @BeforeEach
-    @SuppressWarnings("unused")
+    @Before
     void setUp() throws Exception{
-        // new ChatBotSimulation();
+        ChatBotSimulation = ClassHolder.getChatBotSimulation();
         System.setOut(new PrintStream(outputStreamCaptor));
         invokeMain();
         output = outputStreamCaptor.toString();
     }
     
 
-    @AfterEach
-    @SuppressWarnings("unused")
+    @After
     void tearDown(){
         System.setOut(standardOut);
         outputStreamCaptor.reset();
@@ -40,42 +38,53 @@ class ChatBotSimulationTestSuite {
 
 
     @Test
+    @TestMetaData(
+        description = "Test LimitReached Case False", 
+        marks = "1"
+    )
     void testChatBotSimulation() {
-        // 1 mark
         assertTrue(output.contains("Hello World"));
         assertEquals("Hello World!", output.lines().findFirst().get().trim());
     }
 
 
     @Test
+    @TestMetaData(
+        description = "Test LimitReached Case False", 
+        marks = "1"
+    )
     void testCreateChatBotPlatform() {
-        // 1 mark
         assertTrue(output.contains("Your ChatBots"));
         assertTrue(output.indexOf("Hello World!") < output.indexOf("Your ChatBots"));
     }
 
 
     @Test
+    @TestMetaData(
+        description = "Test LimitReached Case False", 
+        marks = "2"
+    )
     void testAddChatBotToPlatform() {
-        //2 marks
-
-        //This is supposed to return true since the program mark scheme did specify that you should add all the chatbots at least once
-        //TODO: ammend this test or the test subject
         assertTrue(output.contains("ChatGPT-3.5") && output.contains("LLaMa") && output.contains("Mistral7B") && output.contains("Bard") && output.contains("Claude") && output.contains("Solar"));
     }
 
 
     @Test
+    @TestMetaData(
+        description = "Test LimitReached Case False", 
+        marks = "2"
+    )
     void testChatBotPlatformGetChatBotList() {
-        // 2 marks
-        //Cannot figure out how to get the other mark out of this one but you can tell what I was doing with the output cap and what not
         assertTrue(output.contains("Bot Number"));
     }
 
 
     @Test
+    @TestMetaData(
+        description = "Test InteractWithBot", 
+        marks = "4"
+    )
     void testChatBotPlatfomInteractWithBot() {
-        // 4 marks
         long firstInteractions = output.lines()
                             .filter(line->line.contains("Response from"))
                             .count();
@@ -88,13 +97,17 @@ class ChatBotSimulationTestSuite {
 
 
     @Test
+    @TestMetaData(
+        description = "Test GetChatBotList After Simulation", 
+        marks = "2"
+    )
     void testChatBotPlatformGetChatBotListUpdated() {
-        // 2 marks
         assertTrue(output.contains("Your ChatBots"), "There should be a list of chatbots");
         assertTrue(output.lastIndexOf("Your ChatBots") != output.indexOf("Your ChatBots"), "There should be a second list of chatbots");
         assertTrue(output.indexOf("Your ChatBots")<output.lastIndexOf("Your ChatBots"));
     }
 
+    
     private void invokeMain() throws Exception {
         ChatBotSimulation.getMethod("main", String[].class).invoke(null, (Object) new String[]{});
     }
