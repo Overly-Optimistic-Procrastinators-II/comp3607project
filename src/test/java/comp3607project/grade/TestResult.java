@@ -1,4 +1,4 @@
-package comp3607project;
+package comp3607project.grade;
 
 public class TestResult {
     private String testName;

@@ -2,30 +2,31 @@ package comp3607project.suite;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
 import comp3607project.tool.DynamicClassLoader;
 
-// import comp3607project.JudgeSystem;
-
-// import java.util.ArrayList;
-
 public class ChatBotPlatformTestSuite {
-    // private final ChatBotPlatform testPlatform = new ChatBotPlatform();
     private Class<?> ChatBotPlatform;
     
     public ChatBotPlatformTestSuite() {}
 
-    @Before
+    @BeforeClass
     public void setup() {
         try {
             ChatBotPlatform = DynamicClassLoader.getClass("ChatBotPlatform");
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             ChatBotPlatform = null;
         }
     }
-    
+
+
+    @AfterClass
+    public void tearDown() {
+        ChatBotPlatform = null;
+    }
 
     // @Test
     // @TestMetaData(

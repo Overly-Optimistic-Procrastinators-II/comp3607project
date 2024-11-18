@@ -2,7 +2,7 @@
  * Command
  */
 
-package comp3607project;
+package comp3607project.command;
 
 public interface Command 
 {

@@ -5,27 +5,26 @@ import javax.tools.ToolProvider;
 import java.io.File;
 
 public class DynamicJavaCompiler {
-    public static void compile(String directory) {
+    private String directory;
+
+    public DynamicJavaCompiler(String directory) {
+        this.directory = directory;
+    }
+
+    public boolean compile() {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        validateCompiler(compiler);
+        
+        if(compiler == null) {
+            return false;
+        }
 
         File[] files = getFiles(directory);
         String[] config = configureCompiler(files, directory);
-        
-        if(compiler.run(null, null, null, config) != 0) {
-            System.out.println("Compilation failed");
-        }
+
+        return (compiler.run(null, null, null, config) == 0);
     }
 
-    private static void validateCompiler(JavaCompiler compiler) {
-        if(compiler == null) {
-            System.out.println("No java compiler available.\n");
-            System.out.println("Application requires a Java Development Kit (JDK) to be installed.\n");
-            return;
-        }
-    }
-
-    private static String[] configureCompiler(File[] files, String directory) {
+    private String[] configureCompiler(File[] files, String directory) {
         String[] config = new String[files.length + 2];
         config[0] = "-classpath";
         config[1] = directory;
@@ -37,7 +36,7 @@ public class DynamicJavaCompiler {
         return config;
     }
 
-    private static File[] getFiles(String directory) {
+    private File[] getFiles(String directory) {
         File srcDirectory = new File(directory);
         File[] files = srcDirectory.listFiles((d, name) -> name.endsWith(".java"));
 

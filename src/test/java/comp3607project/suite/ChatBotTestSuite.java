@@ -6,30 +6,33 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 // import java.lang.reflect.Constructor;
-
-import org.junit.Before;
-// import org.junit.jupiter.api.BeforeEach;
+import org.junit.BeforeClass;
+import org.junit.AfterClass;
 import org.junit.jupiter.api.Test;
 
 import comp3607project.tool.DynamicClassLoader;
-
-// import comp3607project.JudgeSystem;
 
 public class ChatBotTestSuite {
     private Class<?> ChatBot;
     // private static Object tester;
     // private static Object customTester;
 
-    @Before
+    @BeforeClass
     public void setup() {
         try {
             ChatBot = DynamicClassLoader.getClass("ChatBot");
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             ChatBot = null;
         }
     }
 
-    // @BeforeEach
+    @AfterClass
+    public void tearDown() {
+        ChatBot = null;
+    }
+    
+    
+    // @Before
     // public void initialize() {
     //     try {
     //         Constructor<?> testConstructor = ChatBot.getConstructor();

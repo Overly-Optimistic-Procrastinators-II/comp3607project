@@ -10,11 +10,11 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+
+import comp3607project.grade.TestResult;
+
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
-
-import comp3607project.JudgeSystem;
-import comp3607project.TestResult;
 
 import java.util.ArrayList;
 
@@ -23,21 +23,21 @@ public class PDFGenerator {
     private static Font headerFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 14, Font.BOLD, BaseColor.BLACK);
     private static Font cellFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK);
     
-    public static void generate(String filePath, ArrayList<TestResult> summary, String folderName) {
+    public static void generate(String filePath, ArrayList<TestResult> summary, String folderName, int grade) {
         try {
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(new File(filePath, "results.pdf")));
             document.open();
             addMetaData(document);
-            addContent(document, summary, folderName);
+            addContent(document, summary, folderName, grade);
             document.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void addContent(Document document, ArrayList<TestResult> summary, String folderName) throws DocumentException {
-        document.add(new Paragraph(("Student ID: "+ folderName + "\nGrade: " + JudgeSystem.getGrade() + "/100"), defaultFont));
+    private static void addContent(Document document, ArrayList<TestResult> summary, String folderName, int grade) throws DocumentException {
+        document.add(new Paragraph(("Student Info: "+ folderName + "\nGrade: " + grade + "/100"), defaultFont));
         document.add(new Paragraph(" "));
         
         PdfPTable table = new PdfPTable(3); 
@@ -62,7 +62,7 @@ public class PDFGenerator {
             document.add(new Paragraph("This submission has invalid files", defaultFont));
         } else {
             for (TestResult result : summary) {
-                PdfPCell nameCell = new PdfPCell(new Paragraph(result.getTestName(), cellFont));
+                PdfPCell nameCell = new PdfPCell(new Paragraph(result.getDescription(), cellFont));
                 nameCell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 table.addCell(nameCell);
 

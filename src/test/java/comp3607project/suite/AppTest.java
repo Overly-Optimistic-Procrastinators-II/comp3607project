@@ -1,8 +1,11 @@
-package comp3607project;
+package comp3607project.suite;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+import comp3607project.JudgePortal;
+import comp3607project.JudgeSystem;
+import comp3607project.command.CommandProducePDF;
 import comp3607project.file.FileIterator;
 import comp3607project.file.FileManager;
 import comp3607project.file.FileParser;

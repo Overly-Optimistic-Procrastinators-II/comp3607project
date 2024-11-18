@@ -1,4 +1,6 @@
-package comp3607project;
+package comp3607project.command;
+
+import comp3607project.JudgeSystem;
 
 public class CommandUnzipFiles implements Command {
     private JudgeSystem judgeSystem;

@@ -2,7 +2,7 @@ package comp3607project.tool;
 
 import java.io.File;
 
-public class ExtractFolderName {
+public class FolderNameExtractor {
 
     public static String getFolderName(String filePath) {
         // Create a File object

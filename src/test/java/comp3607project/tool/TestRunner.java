@@ -4,7 +4,7 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
-import comp3607project.TestResult;
+import comp3607project.grade.TestResult;
 import comp3607project.suite.TestMetaData;
 
 import java.lang.reflect.Method;
@@ -30,9 +30,11 @@ public class TestRunner {
     private void addFailures(Result result) {
         for (Failure failure : result.getFailures()) {
             TestMetaData metadata = failure.getDescription().getAnnotation(TestMetaData.class);
-
+            
             if (!isIgnored(getMetaDataDescription(metadata), getMetaDataMark(metadata))) {
                 summary.add(new TestResult(failure.getDescription().getMethodName(), getMetaDataDescription(metadata), "FAIL", failure.getMessage(), 0));
+            } else {
+                summary.add(new TestResult(failure.getDescription().getMethodName(), failure.getDescription().getMethodName(), "FAIL", failure.getMessage(), 0));
             }
         }
     }

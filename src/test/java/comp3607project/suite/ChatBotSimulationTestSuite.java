@@ -6,8 +6,8 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
 import comp3607project.tool.DynamicClassLoader;
@@ -15,32 +15,33 @@ import comp3607project.tool.DynamicClassLoader;
 public class ChatBotSimulationTestSuite {
     private Class<?> ChatBotSimulation;
 
-    public ChatBotSimulationTestSuite() {}
-    
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
     private final PrintStream standardOut = System.out;
     protected String output;
 
-    @Before
-    void setUp() {
+    
+    public ChatBotSimulationTestSuite() {}
+
+
+    @BeforeClass
+    public void setup() {
         try {
             ChatBotSimulation = DynamicClassLoader.getClass("ChatBotSimulation");
             System.setOut(new PrintStream(outputStreamCaptor));
             invokeMain();
-        } catch (ClassNotFoundException e) {
-            ChatBotSimulation = null;
         } catch (Exception e) {
-            e.printStackTrace();
+            ChatBotSimulation = null;
         }
         
         output = outputStreamCaptor.toString();
     }
     
 
-    @After
+    @AfterClass
     void tearDown(){
         System.setOut(standardOut);
         outputStreamCaptor.reset();
+        ChatBotSimulation = null;
     }
 
 
