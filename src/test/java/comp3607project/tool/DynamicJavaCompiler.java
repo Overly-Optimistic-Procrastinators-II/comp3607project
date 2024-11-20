@@ -1,3 +1,7 @@
+/**
+ * Author: Jonathan Mohammed
+ */
+
 package comp3607project.tool;
 
 import javax.tools.JavaCompiler;

@@ -1,3 +1,7 @@
+/**
+ * Author: Jonathan Mohammed
+ */
+
 package comp3607project.tool;
 
 import org.junit.runner.JUnitCore;
@@ -73,9 +77,14 @@ public class TestRunner {
 }
 
 
-/*
+/**
  * Resources:
  * 
- * - 
+ * - https://stackoverflow.com/questions/2543912/how-do-i-run-junit-tests-from-inside-my-java-application
+ * - https://junit.org/junit4/javadoc/4.12/org/junit/runner/notification/Failure.html
+ * - https://junit.org/junit4/javadoc/4.13/org/junit/runner/Description.html
+ * - https://junit.org/junit4/javadoc/4.12/org/junit/runner/notification
+ * - https://junit.org/junit4/javadoc/latest/org/junit/runner/Result.html
+ * - https://stackoverflow.com/questions/67185821/collect-junit-test-metadata-via-annotations
  * 
  */

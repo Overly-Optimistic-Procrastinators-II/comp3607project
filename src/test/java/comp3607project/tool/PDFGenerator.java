@@ -1,3 +1,7 @@
+/**
+ * Author: Jonathan Mohammed
+ */
+
 package comp3607project.tool;
 
 import java.io.File;
@@ -36,8 +40,13 @@ public class PDFGenerator {
         }
     }
 
+    /**
+     * Last Edited By: Kailash Joseph
+     * 
+     * Displays Test Results in a Table Format
+     */
     private static void addContent(Document document, ArrayList<TestResult> summary, String folderName, int grade) throws DocumentException {
-        document.add(new Paragraph(("Student Info: "+ folderName + "\nGrade: " + grade + "/100"), defaultFont));
+        document.add(new Paragraph(("Submission: "+ folderName + "\nGrade: " + grade + "/100"), defaultFont));
         document.add(new Paragraph(" "));
         
         PdfPTable table = new PdfPTable(3); 
@@ -78,7 +87,7 @@ public class PDFGenerator {
 
         document.add(table); // Add the table to the document
     }
-
+    
     private static void addMetaData(Document document) {
         document.addTitle("COMP 2603 A1 Results");
         document.addSubject("");

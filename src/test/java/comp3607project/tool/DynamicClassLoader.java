@@ -1,3 +1,7 @@
+/**
+ * Author: Jonathan Mohammed
+ */
+
 package comp3607project.tool;
 
 import java.io.File;
@@ -35,3 +39,10 @@ public class DynamicClassLoader {
         return isCompiled;
     }
 }
+
+/**
+ * Resources
+ * 
+ * - https://stackoverflow.com/questions/738393/how-to-use-urlclassloader-to-load-a-class-file
+ * 
+ */

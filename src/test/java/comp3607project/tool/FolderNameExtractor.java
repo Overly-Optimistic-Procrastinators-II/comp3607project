@@ -1,20 +1,18 @@
+/**
+ * Author: Kailash Joseph
+ */
+
 package comp3607project.tool;
 
 import java.io.File;
 
 public class FolderNameExtractor {
-
+    /** Used to extract the submission name from a file path. */
     public static String getFolderName(String filePath) {
-        // Create a File object
         File file = new File(filePath);
 
-        // Get the parent directory
         String parentDirectory = file.getParent();
-
-        // Create a File object for the parent directory
         File parentDir = new File(parentDirectory);
-
-        // Get the name of the parent directory
         String parentDirName = parentDir.getName();
 
         // Split the name by underscores and remove the last part
