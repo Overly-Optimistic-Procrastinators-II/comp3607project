@@ -35,7 +35,7 @@ public class ChatBotGeneratorTestSuite {
         description = "Test GenerateChatBotLLM returns ChatGPT-3.5 Lower Bound", 
         marks = "1"
     )
-    public void testGenerateChatBotLowerBound() {
+    public void testGenerateChatBotLLMLowerBound() {
         assertEquals("ChatGPT-3.5", invokeGenerateChatBotLLM(0));
     }
 

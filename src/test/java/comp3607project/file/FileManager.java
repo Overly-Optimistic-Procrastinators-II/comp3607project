@@ -1,5 +1,10 @@
 /*
+ * Author: Amir Persad, Kailash Joseph
+ * 
+ * Iterator Design Pattern
  * Concrete Aggregate
+ * Stores a list of directories representing submission folders
+ * Creates a concrete iterator (FileParser) to traverse the list of directories
  */
 
 package comp3607project.file;
@@ -16,6 +21,11 @@ public class FileManager implements FileContainer {
         addDirectories(directory);
     }
 
+    /**
+     * Last Edited By: Jonathan Mohammed
+     * 
+     * Add Directories of submissions to the list of abstract files to be processed
+     */
     private void addDirectories(File directory) {
         if (directory.isDirectory()) {
             File [] fileList = directory.listFiles();

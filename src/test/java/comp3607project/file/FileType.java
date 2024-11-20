@@ -1,7 +1,13 @@
+/**
+ * Author: Amir Persad, Kailash Joseph
+ * Last Edited By: Tyrell Lewis
+ */
+
 package comp3607project.file;
 
 import java.io.File;
 
+/** Abstract File representations for uploaded files or directories */
 public class FileType {
     private File file;
 

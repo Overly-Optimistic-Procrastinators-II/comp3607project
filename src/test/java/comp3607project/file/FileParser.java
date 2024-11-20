@@ -1,7 +1,9 @@
-/*
+/**
+ * Author: Kailash Joseph
+ * 
  * Concrete Iterator
+ * Defines the operations done to List in FileManager and enables traversals of the list
  */
-//pulling
 
 package comp3607project.file;
 
