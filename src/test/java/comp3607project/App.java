@@ -1,3 +1,9 @@
+/**
+ * Author: Tyrell Lewis
+ * 
+ * Creates the view layer (JudgePortal) and associates it with a controller (JudgeSystem)
+ */
+
 package comp3607project;
 
 public class App {

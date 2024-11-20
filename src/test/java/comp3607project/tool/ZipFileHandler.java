@@ -3,54 +3,56 @@ package comp3607project.tool;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import java.util.Enumeration;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+import java.util.zip.ZipFile;
 
 public class ZipFileHandler {
-    private static ZipEntry zipEntry;
-    private static File subDirectory;
 
-    public static String unzip(String filePath, File targetDirectory) {
-        createTargetSubDirectory(filePath, targetDirectory);
-        unzipFiles(filePath);
-        return subDirectory.getAbsolutePath();
+    public static void unzip(String filePath, File topLevelDir) {
+        unzipFiles(new File(filePath), topLevelDir);
+        extractNestedZips(topLevelDir);
     }
 
-    private static void createTargetSubDirectory(String filePath, File targetDirectory) {
-        String zipFileName = new File(filePath).getName();
-        String directory = zipFileName.substring(0, zipFileName.lastIndexOf('.'));
-        subDirectory = new File(targetDirectory, directory);
+    private static void unzipFiles(File zipFile, File destinationDir) {
+        try (ZipFile zip = new ZipFile(zipFile)) {
+            Enumeration<? extends ZipEntry> entries = zip.entries();
+            while (entries.hasMoreElements()) {
+                ZipEntry entry = entries.nextElement();
 
-        if (!subDirectory.exists()) {
-            subDirectory.mkdir();
-        }
-    }
-
-    private static void unzipFiles(String filePath) {
-        try (ZipInputStream zipInput = new ZipInputStream(Files.newInputStream(Path.of(filePath)))) {
-            while((zipEntry = zipInput.getNextEntry()) != null) {
-                File file = new File(subDirectory, zipEntry.getName());
-                if (zipEntry.isDirectory()) {
-                    file.mkdirs();
-                    System.out.println("Extracted file: " + file.getAbsolutePath());
-                } else {
-                    if (isJavaFile(file.getName())) {
-                        new File(file.getParent()).mkdirs();
-                        Files.copy(zipInput, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                    }
+                if (entry.getName().endsWith(".class")) {
+                    continue;
                 }
 
-                zipInput.closeEntry();
+                File entryDestination = new File(destinationDir, entry.getName());
+                if (entry.isDirectory()) {
+                    entryDestination.mkdirs();
+                } else {
+                    entryDestination.getParentFile().mkdirs();
+                    Files.copy(zip.getInputStream(entry), entryDestination.toPath());
+                }
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+            System.err.println("Error unzipping file: " + zipFile.getName() + " - " + e.getMessage());
+        }        
     }
 
-    private static boolean isJavaFile(String filePath) {
-        return ((filePath.endsWith(".java") ? true : false));
+    private static void extractNestedZips(File directory) {
+        File[] files = directory.listFiles();
+        if (files == null) return;
+
+        for (File file : files) {
+            if (file.isDirectory()) {
+                // Recursively process subdirectories
+                extractNestedZips(file);
+            } else if (file.getName().endsWith(".zip")) {
+                // Unzip nested zipped folder
+                File nestedDir = new File(file.getParentFile(), file.getName().replace(".zip", ""));
+                nestedDir.mkdir();
+                unzipFiles(file, nestedDir);
+                file.delete(); // Optionally remove the nested zip after extraction
+            }
+        }
     }
 }
 

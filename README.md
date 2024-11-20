@@ -8,13 +8,9 @@
 * Calculating an overall score for the submission using the assignment rubric and printing a breakdown of the marks per test for each class
 * A Test suite for evaluation of the system’s performance
 
-# Dependencies
-* Packaged as a Maven Project
-
 # Members
 * Kailash Joseph
 * Amir Persad
 * Jonathan Mohammed
 * Tyrell Lewis
 * Varun Maharaj
-

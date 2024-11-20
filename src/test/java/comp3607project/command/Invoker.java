@@ -1,5 +1,10 @@
-/*
+/**
+ * Author: Tyrell Lewis
+ * 
+ * Command Design Pattern
  * Invoker
+ * This class holds a command and gets the Command interface to execute a request by 
+ * calling the execute method
  */
 
 package comp3607project.command;

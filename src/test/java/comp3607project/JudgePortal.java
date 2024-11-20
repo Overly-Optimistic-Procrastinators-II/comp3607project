@@ -1,5 +1,14 @@
-/*
+/**
+ * Author: Tyrell Lewis
+ * 
+ * Command Design Pattern
  * Client
+ * Creates Concrete Commands (CommandUnzipFiles) and sets a receiver for the 
+ * command (JudgeSystem)
+ * 
+ * Facade Design Pattern
+ * Client
+ * Sends requests to the JudgeSystem (Facade) instead of calling subsystems directly
  */
 
 package comp3607project;
@@ -138,9 +147,12 @@ public class JudgePortal extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>
     
 
+    /**
+     * Captures submission (zipped files) using a JFileChooser.
+     */
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {
         evaluateButton.setVisible(true);
         
@@ -162,9 +174,13 @@ public class JudgePortal extends javax.swing.JFrame {
         }
     }
 
-    private void evaluateButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        
-        
+
+    /**
+     * Last Edited By: Kailash Joseph
+     * 
+     * Unzips files using the concrete command (CommandUnzipFiles) 
+     */
+    private void evaluateButtonActionPerformed(java.awt.event.ActionEvent evt) { 
         String filePath = zipFileLabel.getText();
 
         mainSubmissionLabel.setText("Your Results have been generated!!");
@@ -172,8 +188,8 @@ public class JudgePortal extends javax.swing.JFrame {
         Command unzipFilesCommand = new CommandUnzipFiles (judgeSystem, filePath);
         invoker.setCommand(unzipFilesCommand);
         invoker.pressButton();
-    }                                              
-                               
+    }
+
 
     /**
      * @param args the command line arguments
