@@ -1,3 +1,8 @@
+/**
+ * Author: Varun Maharaj
+ * Last Edited By: Jonathan Mohammed
+ */
+
 package comp3607project.suite;
 
 import java.io.ByteArrayOutputStream;

@@ -1,3 +1,7 @@
+/**
+ * Author: Jonathan Mohammed
+ */
+
 package comp3607project.suite;
 
 import static org.junit.jupiter.api.Assertions.*;
