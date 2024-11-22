@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import comp3607project.tool.DynamicClassLoader;
 
 public class ChatBotPlatformTestSuite {
-    private Class<?> ChatBotPlatform;
+    private Class<?> ChatBotPlatform;/** Stores the class of the ChatBotPlatform */
     
     public ChatBotPlatformTestSuite() {}
 

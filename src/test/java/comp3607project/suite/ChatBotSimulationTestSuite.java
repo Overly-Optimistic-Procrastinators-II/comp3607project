@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import comp3607project.tool.DynamicClassLoader;
 
 public class ChatBotSimulationTestSuite {
-    private Class<?> ChatBotSimulation;
+    private Class<?> ChatBotSimulation;/** Stores the class of the ChatBotSimulation class */
 
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
     private final PrintStream standardOut = System.out;

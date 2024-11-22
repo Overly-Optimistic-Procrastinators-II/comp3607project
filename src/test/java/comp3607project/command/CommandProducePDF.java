@@ -10,7 +10,7 @@ package comp3607project.command;
 import comp3607project.JudgeSystem;
 
 public class CommandProducePDF implements Command {
-    private JudgeSystem judgeSystem;
+    private JudgeSystem judgeSystem;/** Creates a JudgeSystem attribute to call generate results*/
 
     public CommandProducePDF (JudgeSystem judgeSystem) {
         this.judgeSystem = judgeSystem;

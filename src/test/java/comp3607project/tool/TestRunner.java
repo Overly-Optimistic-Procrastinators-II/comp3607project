@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class TestRunner {
-    private ArrayList<TestResult> summary = new ArrayList<TestResult>();
+    private ArrayList<TestResult> summary = new ArrayList<TestResult>(); //**Stores the test results so that it can be outputted to the PDF */
 
     public TestRunner() {}
 

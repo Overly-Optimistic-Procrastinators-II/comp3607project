@@ -1,8 +1,3 @@
-/**
- * Author: Varun Maharaj
- * Last Edited By: Jonathan Mohammed
- */
-
 package comp3607project.suite;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import comp3607project.tool.DynamicClassLoader;
 
 public class ChatBotTestSuite {
-    private Class<?> ChatBot;
+    private Class<?> ChatBot;/** Stores the class of the ChatBot object. */
     // private static Object tester;
     // private static Object customTester;
 

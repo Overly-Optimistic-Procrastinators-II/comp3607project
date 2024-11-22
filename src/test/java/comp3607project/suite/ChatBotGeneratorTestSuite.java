@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import comp3607project.tool.DynamicClassLoader;
 
 public class ChatBotGeneratorTestSuite {
-    private Class<?> ChatBotGenerator;
+    private Class<?> ChatBotGenerator;/** Stores the class of the ChatBotGenerator class */
 
     @BeforeClass
     public void setup() {
