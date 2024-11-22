@@ -18,6 +18,13 @@ public class ZipFileHandler {
         extractNestedZips(topLevelDir);
     }
 
+    /**
+     * Extracts files from a given ZIP file to a specified directory
+     * skipping over the .class files. Uses Java's ZipFile to read ZIP file
+     * and handle directory creation and file copying
+     * @param zipFile
+     * @param destinationDir
+     */
     private static void unzipFiles(File zipFile, File destinationDir) {
         try (ZipFile zip = new ZipFile(zipFile)) {
             Enumeration<? extends ZipEntry> entries = zip.entries();
@@ -41,6 +48,14 @@ public class ZipFileHandler {
         }        
     }
 
+
+    /**
+     * Processes a directory recursively to extract all .zip files including
+     * those nested within subdirectories. Ensures that each .zip file
+     * is unzipped into corresponding directory and removes original .zip
+     * file after extraction.
+     * @param directory
+     */
     private static void extractNestedZips(File directory) {
         File[] files = directory.listFiles();
         if (files == null) return;

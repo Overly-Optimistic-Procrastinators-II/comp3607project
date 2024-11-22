@@ -13,6 +13,12 @@ public class DynamicClassLoader {
     private String classPath;
     private boolean isCompiled;
 
+    
+    /**
+     * Constructor for DynamicClassLoader, dynamically compiles Java files
+     * in directory and will load the classes using URLClassLoader
+     * @param directory
+     */
     public DynamicClassLoader(String directory) {
         classPath = directory;
         DynamicJavaCompiler compiler = new DynamicJavaCompiler(classPath);

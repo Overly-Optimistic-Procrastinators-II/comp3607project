@@ -15,6 +15,10 @@ public class DynamicJavaCompiler {
         this.directory = directory;
     }
 
+    /**
+     * Dynamically compiles Java source files using JavaCompiler
+     * @return
+     */
     public boolean compile() {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         
@@ -28,6 +32,14 @@ public class DynamicJavaCompiler {
         return (compiler.run(null, null, null, config) == 0);
     }
 
+    /**
+     * Prepares configuration arguements for JavaCompiler. 
+     * Sets up the class path and includes Java source files
+     * that need to be compiled
+     * @param files
+     * @param directory
+     * @return
+     */
     private String[] configureCompiler(File[] files, String directory) {
         String[] config = new String[files.length + 2];
         config[0] = "-classpath";
@@ -40,6 +52,13 @@ public class DynamicJavaCompiler {
         return config;
     }
 
+    
+    /**
+     * Return all .java files found in the directory by filtering the 
+     * .java files
+     * @param directory
+     * @return
+     */
     private File[] getFiles(String directory) {
         File srcDirectory = new File(directory);
         File[] files = srcDirectory.listFiles((d, name) -> name.endsWith(".java"));

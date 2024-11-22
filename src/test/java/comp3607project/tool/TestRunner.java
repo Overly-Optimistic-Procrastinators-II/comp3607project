@@ -31,6 +31,13 @@ public class TestRunner {
         return summary;
     }
 
+
+    /**
+     * Processes the failures from the JUnit result and adds them 
+     * to the summary list. Iterates through test failures and checks 
+     * metadata annotations, adding relevant information to the TestResult.
+     * @param result
+     */
     private void addFailures(Result result) {
         for (Failure failure : result.getFailures()) {
             TestMetaData metadata = failure.getDescription().getAnnotation(TestMetaData.class);
@@ -43,6 +50,12 @@ public class TestRunner {
         }
     }
 
+    /**
+     * Identifies the tests that have passed and adds their details to 
+     * the summary list. Uses java reflection to iterate over methods in class.
+     * Checks their annotation for metadata and determines if considered a pass
+     * @param testClass
+     */
     private void addPasses(Class<?> testClass) {
         for (Method method : testClass.getMethods()) {
             TestMetaData metadata = method.getAnnotation(TestMetaData.class);

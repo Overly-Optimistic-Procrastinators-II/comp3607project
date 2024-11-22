@@ -23,8 +23,8 @@ public class FileManager implements FileContainer {
 
     /**
      * Last Edited By: Jonathan Mohammed
-     * 
-     * Add Directories of submissions to the list of abstract files to be processed
+     * recursively processes a directory structure to check for Java files
+     * and adds the directory to a collection 
      */
     private void addDirectories(File directory) {
         if (directory.isDirectory()) {

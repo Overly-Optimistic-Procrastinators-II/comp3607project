@@ -152,6 +152,9 @@ public class JudgePortal extends javax.swing.JFrame {
 
     /**
      * Captures submission (zipped files) using a JFileChooser.
+     * Implements an action handler for a "Browse" button 
+     * in a Swing-based GUI application.
+     * @param evt
      */
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {
         evaluateButton.setVisible(true);

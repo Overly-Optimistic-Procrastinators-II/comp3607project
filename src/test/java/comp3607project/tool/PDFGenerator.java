@@ -27,6 +27,15 @@ public class PDFGenerator {
     private static Font headerFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 14, Font.BOLD, BaseColor.BLACK);
     private static Font cellFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 10, BaseColor.BLACK);
     
+    /**
+     * Creates a PDF file that summarizes the test results using
+     * iText library. Accepts a file path, a summary of the test results,
+     * a folder name and a grade, then generates the PDF file.
+     * @param filePath
+     * @param summary
+     * @param folderName
+     * @param grade
+     */
     public static void generate(String filePath, ArrayList<TestResult> summary, String folderName, int grade) {
         try {
             Document document = new Document();
@@ -44,6 +53,11 @@ public class PDFGenerator {
      * Last Edited By: Kailash Joseph
      * 
      * Displays Test Results in a Table Format
+     * @param document
+     * @param summary
+     * @param folderName
+     * @param grade
+     * @throws DocumentException
      */
     private static void addContent(Document document, ArrayList<TestResult> summary, String folderName, int grade) throws DocumentException {
         document.add(new Paragraph(("Submission: "+ folderName + "\nGrade: " + grade + "/100"), defaultFont));
