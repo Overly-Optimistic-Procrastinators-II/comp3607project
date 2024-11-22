@@ -33,6 +33,11 @@ public class JudgePortal extends javax.swing.JFrame {
         initComponents();
     }
 
+    /**
+     * Creates new form judgePortal
+     * @param system
+     */
+
     public JudgePortal (JudgeSystem system) {
         initComponents();
         this.judgeSystem = system;
@@ -151,8 +156,10 @@ public class JudgePortal extends javax.swing.JFrame {
     
 
     /**
-     * Captures submission (zipped files) using a JFileChooser.
-     * Implements an action handler for a "Browse" button 
+     * Last Edited By: Tyrell Lewis
+     * 
+     * Capture submissions (zipped files) using a JFileChooser.
+     * Implements an action handler for the "Browse" button 
      * in a Swing-based GUI application.
      * @param evt
      */
@@ -181,7 +188,8 @@ public class JudgePortal extends javax.swing.JFrame {
     /**
      * Last Edited By: Kailash Joseph
      * 
-     * Unzips files using the concrete command (CommandUnzipFiles) 
+     * Unzips files using the concrete command (CommandUnzipFiles)
+     * @param evt
      */
     private void evaluateButtonActionPerformed(java.awt.event.ActionEvent evt) { 
         String filePath = zipFileLabel.getText();
@@ -225,6 +233,10 @@ public class JudgePortal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() 
             {   
+                /**
+                 * Creates a judgeSystem to avoid having a null exception error in the event 
+                 * that the judgePortal is made without a judgeSystem object being passed as a parameter.
+                 */
                 JudgeSystem judgeSystem = new JudgeSystem();
                 new JudgePortal(judgeSystem).setVisible(true);
             }
