@@ -2,7 +2,7 @@
  * Author: Tyrell Lewis
  * 
  * Command Design Pattern
- * Concrete Command
+ * Concrete Command that handles the unzipping files by assigning the operation to the judgeSystem
  */
 
 package comp3607project.command;
@@ -21,4 +21,5 @@ public class CommandUnzipFiles implements Command {
     public void execute() {
         judgeSystem.unzipSubmissions(filePath);
     }
+
 }
